@@ -20,41 +20,33 @@ import com.badlogic.gdx.utils.Pool;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class GameRenderer {
-    static final float FRUSTUM_WIDTH = 10;
-    static final float FRUSTUM_HEIGHT = 15;
 
-    OrthographicCamera cam;
-    SpriteBatch batch;
     private TiledMap map;
     private OrthogonalTiledMapRenderer renderer;
     private OrthographicCamera camera;
-    private Pool<Rectangle> rectPool = new Pool<Rectangle>() {
-        @Override
-        protected Rectangle newObject () {
-            return new Rectangle();
-        }
-    };
 
-    public GameRenderer () {
-        map = new TmxMapLoader().load("map.tmx");
-        renderer = new OrthogonalTiledMapRenderer(map, 1 / 16f);
+    public GameRenderer (TiledMap map) {
+        this.map = map;
+        // load map texture TMX file
+        //map = new TmxMapLoader().load("map.tmx");
 
-        // create an orthographic camera, shows us 30x20 units of the world
+        // top-down renderer for map with 1 unit = 10 pixels
+        renderer = new OrthogonalTiledMapRenderer(map, 1 / 10f);
         camera = new OrthographicCamera();
-        camera.setToOrtho(false, 30, 20);
+
+        // camera view = 80 x 60 units = 800x600 res
+        camera.setToOrtho(false, 80, 60);
         camera.update();
-    }
-    public void render () {
-
         renderer.setView(camera);
-        renderer.render();
-
-        //create
-        //Gdx.gl.glClearColor(0.7f, 0.7f, 1.0f, 1);
-        //Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+    }
 
 
+    public void renderMap(){
 
+    renderer.render();
+    }
+
+    public void renderPlayer(){
 
     }
 }
