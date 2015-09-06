@@ -4,6 +4,7 @@ import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.insight.*;
+import com.insight.game.objects.*;
 import com.badlogic.gdx.Application.ApplicationType;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
@@ -17,15 +18,19 @@ public class PlayerScreen extends ScreenAdapter {
     //private OrthogonalTiledMapRenderer renderer;
     private GameRenderer renderer;
     private OrthographicCamera camera;
+    private Avatar playerNS;
 
     public PlayerScreen (InsightGame game){
         this.game = game;
 
         // load map texture TMX file
         map = new TmxMapLoader().load("map.tmx");
+        playerNS = new Avatar();
+        playerNS.setPosition(20,20);
+
 
         // initialize game renderer
-        renderer = new GameRenderer(map);
+        renderer = new GameRenderer(map, playerNS);
     }
 
     @Override
@@ -37,6 +42,6 @@ public class PlayerScreen extends ScreenAdapter {
 
         // render map
         renderer.renderMap();
-        //renderer.renderPlayers();
+        renderer.renderPlayer();
     }
 }
