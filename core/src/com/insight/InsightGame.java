@@ -41,6 +41,7 @@ public class InsightGame extends Game {
 	private BitmapFont font;
 	public SpriteBatch batch;
 
+  /**
 	@Override
 	public void create () {
 
@@ -95,7 +96,8 @@ public class InsightGame extends Game {
 		batch.end();
 
 	}
-/**
+  */
+
 	@Override
 	public void create () {
     Assets.load();
@@ -104,7 +106,6 @@ public class InsightGame extends Game {
 
 	@Override
 	public void render () {
-		super.render();
-	}
-	*/
+    super.render();
+  }
 }
