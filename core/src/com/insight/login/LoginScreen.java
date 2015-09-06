@@ -24,7 +24,7 @@ public class LoginScreen extends ScreenAdapter {
 
     touchVector = new Vector3();
 
-    testBounds = new Rectangle(0, 0, 300, 300);
+    testBounds = new Rectangle((800 - 295) / 2, (600 - 61) / 2, 295, 61);
   }
 
   private void update() {
@@ -48,13 +48,13 @@ public class LoginScreen extends ScreenAdapter {
     // Render background image
     game.batch.disableBlending();
     game.batch.begin();
-    game.batch.draw(Assets.loginBackground, 0, 0, 320, 480);
+    //game.batch.draw(Assets.loginBackground, 0, 0, 320, 480);
     game.batch.end();
 
     // Render all other items
     game.batch.enableBlending();
     game.batch.begin();
-    game.batch.draw(Assets.logo, 160 - 274 / 2, 480 - 10 - 142, 274, 142);
+    game.batch.draw(Assets.loginButton, (800 - 295) / 2, (600 - 61) / 2);
     game.batch.end();
   }
 
