@@ -16,9 +16,9 @@ package com.insight;
  ******************************************************************************/
 
 
-        import com.badlogic.gdx.InputAdapter;
-        import com.badlogic.gdx.graphics.OrthographicCamera;
-        import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.InputAdapter;
+import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.math.Vector3;
 
 public class OrthoCamController extends InputAdapter {
     final OrthographicCamera camera;

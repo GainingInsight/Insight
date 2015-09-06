@@ -14,9 +14,6 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
-//import com.badlogicgames.superjumper.World.WorldListener;
-
-
 
 /**
  * Created by jamesyanyuk on 9/5/15.
@@ -47,10 +44,7 @@ public class PlayerScreen extends ScreenAdapter {
         camera = new OrthographicCamera();
         camera.setToOrtho(false, 80, 60);
         camera.update();
-
     }
-
-
 
     @Override
     public void render (float delta) {

@@ -6,19 +6,13 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.insight.login.LoginScreen;
 
-
-
-
 /**
  *
  * import com.badlogic.gdx.tests.utils.GdxTest;
 
  */
 
-
 public class InsightGame extends Game {
-
-
 	public SpriteBatch batch;
 
   /**
@@ -47,13 +41,10 @@ public class InsightGame extends Game {
 		}
 
 		renderer = new OrthogonalTiledMapRenderer(map);
-
-
 	}
 
 	@Override
 	public void render () {
-
 		Gdx.gl.glClearColor(100f / 255f, 100f / 255f, 250f / 255f, 1f);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		camera.update();
@@ -62,7 +53,6 @@ public class InsightGame extends Game {
 		batch.begin();
 		font.draw(batch, "FPS: " + Gdx.graphics.getFramesPerSecond(), 10, 20);
 		batch.end();
-
 	}
   */
 
