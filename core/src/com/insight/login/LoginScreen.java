@@ -1,46 +1,31 @@
 package com.insight.login;
 
+import com.badlogic.gdx.Input;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
+import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 import com.insight.InsightGame;
-import com.insight.Assets;
 import com.insight.game.PlayerScreen;
-import com.insight.settings.Settings;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input.Keys;
-import com.badlogic.gdx.InputProcessor;
-import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Button.ButtonStyle;
-import com.badlogic.gdx.scenes.scene2d.ui.CheckBox;
-import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton.ImageButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.List;
-import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
-import com.badlogic.gdx.scenes.scene2d.ui.SelectBox;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.Slider;
-import com.badlogic.gdx.scenes.scene2d.ui.SplitPane;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField.TextFieldListener;
-import com.badlogic.gdx.scenes.scene2d.ui.TextTooltip;
-import com.badlogic.gdx.scenes.scene2d.ui.Tooltip;
-import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
-import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
-import com.insight.InsightGame;
-import com.insight.game.PlayerScreen;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 
 public class LoginScreen extends ScreenAdapter {
   Skin skin;
@@ -54,6 +39,8 @@ public class LoginScreen extends ScreenAdapter {
   TextField sessionKeyField;
 
   InsightGame game;
+
+  //NetworkingStore networking;
 
   public LoginScreen(InsightGame game) {
     this.game = game;
@@ -120,9 +107,33 @@ public class LoginScreen extends ScreenAdapter {
 
     loginButton.addListener(new ChangeListener() {
       public void changed (ChangeEvent event, Actor actor) {
-        game.setScreen(new PlayerScreen(game));
+        login();
       }
     });
+
+    stage.addListener(new InputListener() {
+      @Override
+      public boolean keyUp(InputEvent event, int keycode) {
+        if(keycode == Input.Keys.ENTER) {
+          login();
+        }
+        return false;
+      }
+    });
+  }
+
+  public void switchScreen(final InsightGame game, final ScreenAdapter newScreen){
+    stage.getRoot().getColor().a = 1;
+    SequenceAction sequenceAction = new SequenceAction();
+    sequenceAction.addAction(Actions.fadeOut(0.2f));
+    sequenceAction.addAction(Actions.run(new Runnable() {
+      @Override
+      public void run() {
+        game.setScreen(newScreen);
+      }
+    }));
+
+    stage.getRoot().addAction(sequenceAction);
   }
 
   @Override
@@ -146,5 +157,23 @@ public class LoginScreen extends ScreenAdapter {
     stage.dispose();
     skin.dispose();
     loginTextures.dispose();
+  }
+
+  private void login() {
+    String sessionId = sessionIdField.getText();
+    String sessionKey = sessionKeyField.getText();
+
+    // Send request for login to server
+    // Server will validate credentials, then create a token
+    // Server will store token along with information about the user (sessionId and sessionKey)
+    // Server will send back token to client, and client will store token
+    //
+    // When client has initiated a movement command,
+    // Client will send movement message to server along with their token through a socket
+    // Server will receive message from socket, and inspect the included token
+    // Server will act on user:sessionKey associated to sessionId (both decoded from token)
+    // Server will send broadcast to socket room associated to sessionId decoded from token
+
+    switchScreen(game, new PlayerScreen(game));
   }
 }

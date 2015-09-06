@@ -34,11 +34,8 @@ public class GameRenderer {
         mapRenderer.setView(camera);
     }
 
-
     public void renderMap(){
-
         mapRenderer.render();
-
     }
 
     public void renderPlayer(){
