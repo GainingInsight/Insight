@@ -3,23 +3,10 @@ package com.insight;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Game;
-import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.insight.login.LoginScreen;
 
-import com.badlogic.gdx.maps.tiled.*;
-import com.badlogic.gdx.maps.tiled.TiledMapTileLayer.Cell;
-import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
-import com.badlogic.gdx.maps.tiled.tiles.StaticTiledMapTile;
 
-import com.badlogic.gdx.assets.AssetManager;
-import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.maps.MapLayers;
-import com.insight.OrthoCamController;
 
 
 /**
@@ -31,31 +18,12 @@ import com.insight.OrthoCamController;
 
 public class InsightGame extends Game {
 
-	private TiledMap map;
-	private TiledMapRenderer renderer;
-	private OrthographicCamera camera;
-	private OrthoCamController cameraController;
-	private AssetManager assetManager;
-	private Texture tiles;
-	private Texture texture;
-	private BitmapFont font;
+
 	public SpriteBatch batch;
 
   /**
 	@Override
 	public void create () {
-
-		float w = Gdx.graphics.getWidth();
-		float h = Gdx.graphics.getHeight();
-
-		camera = new OrthographicCamera();
-		camera.setToOrtho(false, (w / h) * 320, 320);
-		camera.update();
-
-		cameraController = new OrthoCamController(camera);
-		Gdx.input.setInputProcessor(cameraController);
-
-		font = new BitmapFont();
 		batch = new SpriteBatch();
 
 		{
@@ -106,6 +74,6 @@ public class InsightGame extends Game {
 
 	@Override
 	public void render () {
-    super.render();
-  }
+		super.render();
+	}
 }

@@ -1,5 +1,10 @@
 package com.insight.login;
 
+import com.insight.InsightGame;
+import com.insight.Assets;
+import com.insight.game.PlayerScreen;
+import com.insight.settings.Settings;
+import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputProcessor;

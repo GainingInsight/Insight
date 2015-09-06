@@ -1,107 +1,60 @@
 package com.insight.game;
 
-import com.badlogic.gdx.InputProcessor;
-import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.collision.BoundingBox;
-import com.badlogic.gdx.math.collision.Ray;
-import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.utils.viewport.ScreenViewport;
-import com.insight.InsightGame;
-import com.insight.Assets;
-import com.insight.settings.Settings;
 import com.badlogic.gdx.ScreenAdapter;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.maps.tiled.TmxMapLoader;
+import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.insight.*;
+import com.badlogic.gdx.Application.ApplicationType;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.GlyphLayout;
+import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector3;
+//import com.badlogicgames.superjumper.World.WorldListener;
 
-import com.badlogic.gdx.math.*;
 
-import com.badlogic.gdx.graphics.*;
 
-public class PlayerScreen extends ScreenAdapter implements InputProcessor {
-  InsightGame game;
-  OrthographicCamera guiCamera;
+/**
+ * Created by jamesyanyuk on 9/5/15.
+ */
+public class PlayerScreen extends ScreenAdapter {
+    InsightGame game;
+    int state;
+    OrthographicCamera guiCam;
+    Vector3 touchPoint;
+    //World world;
+    //WorldListener worldListener;
+    //GameRenderer renderer;
+    OrthographicCamera cam;
+    SpriteBatch batch;
+    private TiledMap map;
+    private OrthogonalTiledMapRenderer renderer;
+    private OrthographicCamera camera;
 
-  Sprite loginButton;
-  BoundingBox collisionLoginButton = new BoundingBox();
+    public PlayerScreen (InsightGame game){
+        this.game = game;
 
-  Ray collisionRay;
+        // load map texture
+        map = new TmxMapLoader().load("map.tmx");
+       // renderer = new OrthogonalTiledMapRenderer(map, 1 / 16f);
+        renderer = new OrthogonalTiledMapRenderer(map,1/10f);
 
-  SpriteBatch loginBatch;
+        // create an orthographic camera, shows us 30x20 units of the world
+        camera = new OrthographicCamera();
+        camera.setToOrtho(false, 80, 60);
+        camera.update();
 
-  public PlayerScreen(InsightGame game) {
-    this.game = game;
-    Gdx.input.setInputProcessor(this);
-  }
-
-  @Override
-  public void show() {
-    loginButton = Assets.loginButton;
-    loginButton.setPosition(50, 50);
-    loginButton.setColor(1,1,1,0.5f);
-    collisionLoginButton.set(new Vector3(loginButton.getVertices()[0], loginButton.getVertices()[1], -10),new Vector3(loginButton.getVertices()[10], loginButton.getVertices()[11], 10));
-
-    loginBatch = new SpriteBatch();
-    loginBatch.getProjectionMatrix().setToOrtho2D(0, 0, 800, 600);
-
-    guiCamera = new OrthographicCamera(800, 600);
-    guiCamera.position.x = 400;
-    guiCamera.position.y = 300;
-    guiCamera.update();
-  }
-
-  @Override
-  public void render(float delta) {
-    Gdx.gl.glClearColor(0.2f, 0.2f, 0.2f, 1);
-    Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
-    loginBatch.begin();
-    loginButton.draw(loginBatch);
-    loginBatch.end();
-  }
-
-  @Override
-  public boolean keyDown(int keycode) {
-    return false;
-  }
-
-  @Override
-  public boolean keyUp(int keycode) {
-    return false;
-  }
-
-  @Override
-  public boolean keyTyped(char character) {
-    return false;
-  }
-
-  @Override
-  public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-    collisionRay = guiCamera.getPickRay(screenX, screenY);
-
-    if (Intersector.intersectRayBoundsFast(collisionRay, collisionLoginButton)) {
-      System.out.println("HEY");
     }
 
-    return false;
-  }
 
-  @Override
-  public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-    return false;
-  }
 
-  @Override
-  public boolean touchDragged(int screenX, int screenY, int pointer) {
-    return false;
-  }
-
-  @Override
-  public boolean mouseMoved(int screenX, int screenY) {
-    return false;
-  }
-
-  @Override
-  public boolean scrolled(int amount) {
-    return false;
-  }
+    @Override
+    public void render (float delta) {
+        renderer.setView(camera);
+        renderer.render();
+    }
 }
