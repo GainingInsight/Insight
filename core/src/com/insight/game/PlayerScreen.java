@@ -38,12 +38,12 @@ public class PlayerScreen extends ScreenAdapter {
     public PlayerScreen (InsightGame game){
         this.game = game;
 
-        // load map texture
+        // load map texture TMX file
         map = new TmxMapLoader().load("map.tmx");
-       // renderer = new OrthogonalTiledMapRenderer(map, 1 / 16f);
+       // renderer with 1 unit = 10 pixels
         renderer = new OrthogonalTiledMapRenderer(map,1/10f);
 
-        // create an orthographic camera, shows us 30x20 units of the world
+        // create an orthographic camera, shows us 80x60 units of the world (800x600 res)
         camera = new OrthographicCamera();
         camera.setToOrtho(false, 80, 60);
         camera.update();
@@ -54,6 +54,12 @@ public class PlayerScreen extends ScreenAdapter {
 
     @Override
     public void render (float delta) {
+
+        // clear screen
+        Gdx.gl.glClearColor(0.7f, 0.7f, 1.0f, 1);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
+        // call renderer
         renderer.setView(camera);
         renderer.render();
     }
