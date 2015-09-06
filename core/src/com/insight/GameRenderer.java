@@ -44,17 +44,12 @@ public class GameRenderer {
         camera.setToOrtho(false, 30, 20);
         camera.update();
     }
-    public void render () {
-
+    public void renderMap() {
         renderer.setView(camera);
         renderer.render();
 
-        //create
+        // create
         //Gdx.gl.glClearColor(0.7f, 0.7f, 1.0f, 1);
         //Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
-
-
-
     }
 }
