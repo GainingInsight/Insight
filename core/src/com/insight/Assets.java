@@ -13,6 +13,7 @@ public class Assets {
   // Screen backgrounds
   public static Texture loginBackground;
   public static Texture settingsBackground;
+
   public static TextureRegion loginBackgroundRegion;
   public static TextureRegion settingsBackgroundRegion;
 

@@ -1,8 +1,19 @@
 package com.insight;
 
+<<<<<<< HEAD
+import com.badlogic.gdx.maps.tiled.*;
+
+
 /**
  * Created by Catherine on 9/5/15.
  */
+
+
+=======
+/**
+ * Created by Catherine on 9/5/15.
+ */
+>>>>>>> 51212876360daff5ffaa5fa0b884d7307cf0ebb3
 public class GameRenderer {
 
    /** public GameRenderer() {
@@ -14,7 +25,11 @@ public class GameRenderer {
 
     }
 
+<<<<<<< HEAD
+    public void renderMap() {
+=======
     public void renderBackground() {
+>>>>>>> 51212876360daff5ffaa5fa0b884d7307cf0ebb3
         //Render maze background
 
     }
