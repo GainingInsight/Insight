@@ -57,7 +57,7 @@ public class GameRenderer {
        // Batch batch = mapRenderer.getBatch();
         Batch batch = new SpriteBatch();
         batch.begin();
-        batch.draw(frame, 50,50);
+        batch.draw(frame, player.getPosition().x,player.getPosition().y);
 
         //TODO: draw avatar based on direction facing
         /**

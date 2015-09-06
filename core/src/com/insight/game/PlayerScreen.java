@@ -66,6 +66,11 @@ public class PlayerScreen extends ScreenAdapter {
 
     @Override
     public void render (float delta) {
+        // controller for player movement
+        float deltaTime = Gdx.graphics.getDeltaTime();
+        PlayerController.update(playerNS, deltaTime);
+
+
         // clear screen
         Gdx.gl.glClearColor(0.7f, 0.7f, 1.0f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);

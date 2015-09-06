@@ -30,12 +30,39 @@ public class Avatar {
 
     public Avatar() {
         playerTexture = new Texture("badlogic.jpg");
+        position.x = 50;
+        position.y = 100;
 
+    }
+    public void movePosition(Vector2 newVelocity, float deltaTime){
+        position.add(newVelocity);
+
+        velocity.scl(1 / deltaTime);
+        velocity.x *= DAMPING;
     }
 
     public void setPosition(float xPos, float yPos){
         position.set(xPos, yPos);
 
+    }
+
+
+    public void setStateTime(float time){
+        stateTime = time;
+    }
+
+    public void setVelocity(float newVelocity){
+        velocity.x = newVelocity;
+    }
+
+    public void isMoving(boolean moving){
+        if(moving) state = State.Walking;
+        else state = State.Standing;
+    }
+
+    public void setDirection(boolean right){
+        if(right) facesRight = true;
+        else facesRight = false;
     }
 
     public float getWidth(){
@@ -50,8 +77,16 @@ public class Avatar {
         return position;
     }
 
+    public Vector2 getVelocity(){
+        return velocity;
+
+    }
     public State getState(){
         return state;
+    }
+
+    public float getStateTime(){
+        return stateTime;
     }
 
     public boolean getDirection(){
