@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="80" height="60" tilewidth="10" tileheight="10" nextobjectid="1">
+ <tileset firstgid="1" name="Grass-Tileset" tilewidth="10" tileheight="10" tilecount="2100">
+  <image source="bg.png" width="600" height="800"/>
+  <terraintypes>
+   <terrain name="Grass" tile="-1"/>
+   <terrain name="Rock" tile="-1"/>
+   <terrain name="Sand" tile="-1"/>
+   <terrain name="Dirt" tile="-1"/>
+  </terraintypes>
+  <tile id="275" terrain="0,0,0,0"/>
+  <tile id="276" terrain="0,0,0,0"/>
+  <tile id="325" terrain="0,0,0,0"/>
+  <tile id="326" terrain="0,0,0,0"/>
+  <tile id="603" terrain="1,1,1,1"/>
+  <tile id="604" terrain="1,1,1,1"/>
+  <tile id="623" terrain="2,2,2,2"/>
+  <tile id="624" terrain="2,2,2,2"/>
+  <tile id="653" terrain="1,1,1,1"/>
+  <tile id="654" terrain="1,1,1,1"/>
+  <tile id="673" terrain="2,2,2,2"/>
+  <tile id="674" terrain="2,2,2,2"/>
+  <tile id="984" terrain="3,3,3,3"/>
+  <tile id="985" terrain="3,3,3,3"/>
+  <tile id="1034" terrain="3,3,3,3"/>
+  <tile id="1035" terrain="3,3,3,3"/>
+ </tileset>
+ <layer name="Tile Layer 1" width="80" height="60">
+  <data encoding="base64" compression="zlib">
+   eJztmlGSgjAMhhnWNz1iuQN7EfYOch4PoKdZGJsx00GBJqVp/R++Kavg0o8kbYFb0zQ3AAD4Yh4/L86nZ3vxbar/+deu73Od9hnbZ/s70fvt3L5C7oE7au8J/bnJQ7fiovferqy16m92NsccbZ9P2/2teYg9bvQx17M4HI36o/y9BB5T+lvL4SuLuZGR21cIOaOc5fGY09/o85bXQIv+pLjIPsUeZ5k5JgZf2/k2tTOufdX/8DM6ZvDbbuHYju1L27n7LYkd6uuWOUUq6Brl9lE6pcejBXLmQQ0g/mQg/uAvN8hhGZjLyED8yYhdU4fXgNY931ZTtfzxv2m9mLtvqdGofZ881V4bNHJt7RoMFa8TNfxtzdMa66I0f/fWuBrnSrFjZqyLGuNwrw9JHFkfl+keNN133lO73Yb9pWOB1bHkU9+3PAMO91/KM42+W6uB9BwkxbnzZw5acWMpf2Ou5ZYcTYUld+TiSPdSLI29Gv0/0qEld5rnc4TDWt2ldmj1flaKOqzZT83xOgWp4kVjPWxtfrd0bVP+/p64obnhYDRPc/gjL/zdJf7OEn9XKbeL2L7lPoeSgT/4y421dWRpWJ5blUIp8wXLoBbKQS2UgzjUcQiPcmht9c4lfefYOgzv4r931TGf8AQAAAAAAErgH87auEM=
+  </data>
+ </layer>
+</map>

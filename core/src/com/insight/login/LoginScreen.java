@@ -2,6 +2,7 @@ package com.insight.login;
 
 import com.insight.InsightGame;
 import com.insight.Assets;
+import com.insight.game.PlayerScreen;
 import com.insight.settings.Settings;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.Gdx;
@@ -36,6 +37,7 @@ public class LoginScreen extends ScreenAdapter {
 
       if(testBounds.contains(touchVector.x, touchVector.y)) {
         System.out.println("TOUCHED INSIDE TEST BOUNDS");
+          game.setScreen(new PlayerScreen(game));
         return;
       }
     }
