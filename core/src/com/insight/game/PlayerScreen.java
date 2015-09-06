@@ -40,11 +40,12 @@ public class PlayerScreen extends ScreenAdapter {
 
         // load map texture
         map = new TmxMapLoader().load("map.tmx");
-        renderer = new OrthogonalTiledMapRenderer(map, 1 / 16f);
+       // renderer = new OrthogonalTiledMapRenderer(map, 1 / 16f);
+        renderer = new OrthogonalTiledMapRenderer(map,1/10f);
 
         // create an orthographic camera, shows us 30x20 units of the world
         camera = new OrthographicCamera();
-        camera.setToOrtho(false, 30, 20);
+        camera.setToOrtho(false, 80, 60);
         camera.update();
 
     }
