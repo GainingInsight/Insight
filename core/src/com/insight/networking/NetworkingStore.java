@@ -6,10 +6,24 @@ package com.insight.networking;
 public class NetworkingStore {
   private NetworkingToken token;
 
-  public NetworkingStore() {}
+  private static NetworkingStore instance = null;
 
-  public NetworkingStore(NetworkingToken token) {
+  private NetworkingStore() {}
+
+  private NetworkingStore(NetworkingToken token) {
     setToken(token);
+  }
+
+  public static NetworkingStore instance() {
+    if(instance == null)
+      instance = new NetworkingStore();
+    return instance;
+  }
+
+  public static NetworkingStore instance(NetworkingToken token) {
+    if(instance == null)
+      instance = new NetworkingStore(token);
+    return instance;
   }
 
   public NetworkingToken getToken() {
