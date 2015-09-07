@@ -35,6 +35,7 @@ public class GameRenderer {
     }
 
     public void renderMap(){
+        System.out.print("test");
         mapRenderer.render();
     }
 

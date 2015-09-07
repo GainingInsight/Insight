@@ -28,8 +28,8 @@ public class Avatar {
     boolean facesRight = true;
 
 
-    public Avatar() {
-        playerTexture = new Texture("badlogic.jpg");
+    public Avatar(Texture texture) {
+        playerTexture = texture;
         position.x = 50;
         position.y = 100;
 
