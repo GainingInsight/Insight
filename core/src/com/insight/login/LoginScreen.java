@@ -30,6 +30,7 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.insight.networking.AuthenticationManager;
 import com.insight.networking.InvalidCredentialsException;
+import com.insight.networking.NetworkConnectionException;
 
 public class LoginScreen extends ScreenAdapter {
   Skin skin;
@@ -191,6 +192,8 @@ public class LoginScreen extends ScreenAdapter {
     } catch(InvalidCredentialsException e) {
       // Notify the user of an invalid session id/key combination
       notificationMessageLabel.setText("Invalid session id/key combination!");
+      return;
+    } catch(NetworkConnectionException e) {
       return;
     }
 

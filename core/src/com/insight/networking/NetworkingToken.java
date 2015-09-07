@@ -16,7 +16,7 @@ public class NetworkingToken {
     return tokenVal;
   }
 
-  public String setValue(String tokenVel) {
+  public String setValue(String tokenVal) {
     this.tokenVal = tokenVal;
     return tokenVal;
   }
