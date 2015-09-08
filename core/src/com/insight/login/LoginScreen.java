@@ -1,9 +1,11 @@
 package com.insight.login;
 
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
+import com.badlogic.gdx.utils.Align;
 import com.insight.InsightGame;
 import com.insight.game.PlayerScreen;
 import com.badlogic.gdx.ScreenAdapter;
@@ -26,6 +28,9 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
+import com.insight.networking.AuthenticationManager;
+import com.insight.networking.InvalidCredentialsException;
+import com.insight.networking.NetworkConnectionException;
 
 public class LoginScreen extends ScreenAdapter {
   Skin skin;
@@ -35,15 +40,17 @@ public class LoginScreen extends ScreenAdapter {
   Image loginLogo;
   Label sessionIdLabel;
   Label sessionKeyLabel;
+  Label notificationMessageLabel;
   TextField sessionIdField;
   TextField sessionKeyField;
 
   InsightGame game;
 
-  //NetworkingStore networking;
+  AuthenticationManager authManager;
 
   public LoginScreen(InsightGame game) {
     this.game = game;
+    authManager = AuthenticationManager.instance();
   }
 
   @Override
@@ -67,6 +74,9 @@ public class LoginScreen extends ScreenAdapter {
     sessionIdLabel = new Label("Session ID:", skin);
     sessionKeyLabel = new Label("Session Key:", skin);
 
+    notificationMessageLabel = new Label("", skin);
+    notificationMessageLabel.setColor(Color.RED);
+
     sessionIdField = new TextField("", skin);
     sessionIdField.setMessageText("Session ID");
 
@@ -85,7 +95,9 @@ public class LoginScreen extends ScreenAdapter {
     t.row();
     t.add(sessionKeyField).width(295).padBottom(10);
     t.row();
-    t.add(loginButton);
+    t.add(loginButton).padBottom(10);
+    t.row();
+    t.add(notificationMessageLabel).align(Align.center);
 
     t.layout();
 
@@ -173,6 +185,17 @@ public class LoginScreen extends ScreenAdapter {
     // Server will receive message from socket, and inspect the included token
     // Server will act on user:sessionKey associated to sessionId (both decoded from token)
     // Server will send broadcast to socket room associated to sessionId decoded from token
+
+    // Log the user in; return exception if bad credentials, otherwise set token in store
+    try {
+      authManager.login(sessionId, sessionKey);
+    } catch(InvalidCredentialsException e) {
+      // Notify the user of an invalid session id/key combination
+      notificationMessageLabel.setText("Invalid session id/key combination!");
+      return;
+    } catch(NetworkConnectionException e) {
+      return;
+    }
 
     switchScreen(game, new PlayerScreen(game));
   }
