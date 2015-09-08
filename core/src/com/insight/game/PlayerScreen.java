@@ -82,6 +82,10 @@ public class PlayerScreen extends ScreenAdapter {
       stage.getRoot().setColor(1, 1, 1, 0);
       stage.getRoot().addAction(Actions.fadeIn(0.5f));
 
+      camera = new OrthographicCamera();
+      camera.setToOrtho(false, 800, 600);
+      camera.update();
+
       Gdx.input.setInputProcessor(stage);
     }
 
@@ -93,14 +97,14 @@ public class PlayerScreen extends ScreenAdapter {
         float deltaTime = Gdx.graphics.getDeltaTime();
         //PlayerController.update(playerNS, deltaTime);
 
-
         // clear screen
         Gdx.gl.glClearColor(0.7f, 0.7f, 1.0f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-
         // render map
         //TEST
+        camera.update();
+        renderer.setView(camera);
         renderer.render();
 //         renderer.renderMap();
 //         renderer.renderPlayer();
