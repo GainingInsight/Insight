@@ -46,6 +46,7 @@ public class AuthenticationManager {
               String jsonResponseString = jsonResponseStringRaw.substring(1, jsonResponseStringRaw.length() - 1);
               JSONObject jsonResponse = (JSONObject) JSONValue.parse(jsonResponseString);
 
+              // Store the received token
               String tokenString = (String) jsonResponse.get("token");
               NetworkingToken token = new NetworkingToken(tokenString);
               networkingStore.setToken(token);
