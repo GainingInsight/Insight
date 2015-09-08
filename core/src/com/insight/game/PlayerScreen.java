@@ -31,7 +31,7 @@ public class PlayerScreen extends ScreenAdapter {
     private TiledMap map;
     //private OrthogonalTiledMapRenderer renderer;
     //private PlayerRenderer renderer;
-    private GameRenderer renderer;
+    private PlayerRenderer renderer;
     private OrthographicCamera camera;
     private Sprite playerNS;
     //TEST
@@ -59,8 +59,8 @@ public class PlayerScreen extends ScreenAdapter {
         //initialize player renderer
         //TODO: implement instead of GameRenderer handling player render logic
         //TEST
-        renderer = new GameRenderer(map, playerNStest);
-        //renderer.addSprite(playerNS);
+        renderer = new PlayerRenderer(map);
+        renderer.addSprite(playerNS);
     }
 
 
@@ -101,9 +101,9 @@ public class PlayerScreen extends ScreenAdapter {
 
         // render map
         //TEST
-        //renderer.render();
-         renderer.renderMap();
-         renderer.renderPlayer();
+        renderer.render();
+//         renderer.renderMap();
+//         renderer.renderPlayer();
 
         stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
         stage.draw();

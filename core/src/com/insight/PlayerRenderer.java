@@ -44,12 +44,7 @@ public class PlayerRenderer extends OrthogonalTiledMapRenderer {
         //batch.begin();
         int currentLayer = 0;
 
-        //TEST
-
-
         for (MapLayer layer : map.getLayers()) {
-
-
             if (layer.isVisible()) {
                 if (layer instanceof TiledMapTileLayer) {
                     renderTileLayer((TiledMapTileLayer)layer);
