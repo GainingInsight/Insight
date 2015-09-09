@@ -13,9 +13,11 @@ public class AuthenticationManager {
   private static AuthenticationManager instance = null;
 
   NetworkingStore networkingStore;
+  SessionManager sessionManager;
 
   private AuthenticationManager() {
     networkingStore = NetworkingStore.instance();
+    sessionManager = SessionManager.instance();
   }
 
   public static AuthenticationManager instance() {
@@ -50,6 +52,9 @@ public class AuthenticationManager {
               String tokenString = (String) jsonResponse.get("token");
               NetworkingToken token = new NetworkingToken(tokenString);
               networkingStore.setToken(token);
+
+              // Initiate connection to server
+              //Message initMessage = new InitiationMessage();
 
               return;
           }

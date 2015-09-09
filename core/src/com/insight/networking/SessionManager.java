@@ -13,4 +13,8 @@ public class SessionManager {
       instance = new SessionManager();
     return instance;
   }
+
+  public void send(Message message) {
+
+  }
 }
