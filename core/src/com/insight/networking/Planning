@@ -1,0 +1,5 @@
+Send messages to server through SessionManager
+For movement, send MovementMessage
+
+Message message = new MovementMessage(token, newX, newY);
+SessionManager.instance().send(message);
