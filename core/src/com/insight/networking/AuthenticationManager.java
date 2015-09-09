@@ -9,6 +9,7 @@ import org.json.simple.JSONValue;
 /**
  * Created by jamesyanyuk on 9/6/15.
  */
+
 public class AuthenticationManager {
   private static AuthenticationManager instance = null;
 
@@ -72,4 +73,7 @@ public class AuthenticationManager {
       System.out.println("---> " + e.getCause());
     }
   }
+
 }
+
+

@@ -28,7 +28,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
-import com.insight.networking.AuthenticationManager;
+//import com.insight.networking.AuthenticationManager;
 import com.insight.networking.InvalidCredentialsException;
 import com.insight.networking.NetworkConnectionException;
 
@@ -46,11 +46,11 @@ public class LoginScreen extends ScreenAdapter {
 
   InsightGame game;
 
-  AuthenticationManager authManager;
+  //AuthenticationManager authManager;
 
   public LoginScreen(InsightGame game) {
     this.game = game;
-    authManager = AuthenticationManager.instance();
+    //authManager = AuthenticationManager.instance();
   }
 
   @Override
@@ -187,6 +187,7 @@ public class LoginScreen extends ScreenAdapter {
     // Server will send broadcast to socket room associated to sessionId decoded from token
 
     // Log the user in; return exception if bad credentials, otherwise set token in store
+    /**
     try {
       authManager.login(sessionId, sessionKey);
     } catch(InvalidCredentialsException e) {
@@ -196,7 +197,7 @@ public class LoginScreen extends ScreenAdapter {
     } catch(NetworkConnectionException e) {
       return;
     }
-
+*/
     switchScreen(game, new PlayerScreen(game));
   }
 }

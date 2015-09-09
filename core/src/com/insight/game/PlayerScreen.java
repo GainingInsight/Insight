@@ -27,15 +27,13 @@ public class PlayerScreen extends ScreenAdapter {
     Texture texture;
 
     InsightGame game;
+    //TODO: handle walking + standing sprite animations
     int state;
     private TiledMap map;
-    //private OrthogonalTiledMapRenderer renderer;
-    //private PlayerRenderer renderer;
     private PlayerRenderer renderer;
     private OrthographicCamera camera;
     private Sprite playerNS;
-    //TEST
-    private Avatar playerNStest;
+
 
     public PlayerScreen (InsightGame game){
         this.game = game;
@@ -48,23 +46,10 @@ public class PlayerScreen extends ScreenAdapter {
         playerNS = new Sprite(texture);
         playerNS.setPosition(20,20);
 
-        //TEST
-        playerNStest = new Avatar(texture);
-        playerNStest.setPosition(20,20);
-
-
-        // initialize game renderer
-        //renderer = new GameRenderer(map, playerNS);
-
-        //initialize player renderer
-        //TODO: implement instead of GameRenderer handling player render logic
-        //TEST
+        //initialize player + map renderer
         renderer = new PlayerRenderer(map);
         renderer.addSprite(playerNS);
     }
-
-
-
 
     @Override
     public void show() {
@@ -95,7 +80,7 @@ public class PlayerScreen extends ScreenAdapter {
         //TODO: Add for player movement
         // controller for player movement
         float deltaTime = Gdx.graphics.getDeltaTime();
-        //PlayerController.update(playerNS, deltaTime);
+        PlayerController.update(playerNS, deltaTime);
 
         // clear screen
         Gdx.gl.glClearColor(0.7f, 0.7f, 1.0f, 1);
@@ -106,8 +91,7 @@ public class PlayerScreen extends ScreenAdapter {
         camera.update();
         renderer.setView(camera);
         renderer.render();
-//         renderer.renderMap();
-//         renderer.renderPlayer();
+
 
         stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
         stage.draw();
@@ -121,5 +105,6 @@ public class PlayerScreen extends ScreenAdapter {
     @Override
     public void dispose () {
         stage.dispose();
+
     }
 }
