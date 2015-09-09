@@ -24,11 +24,6 @@ public class PlayerRenderer extends OrthogonalTiledMapRenderer {
     private List<Sprite> sprites;
     private int drawSpritesAfterLayer = 1;
 
-    //private TiledMap map;
-
-    //private Batch batch = new SpriteBatch();
-
-
     public PlayerRenderer(TiledMap map) {
         super(map);
         sprites = new ArrayList<Sprite>();
@@ -63,6 +58,8 @@ public class PlayerRenderer extends OrthogonalTiledMapRenderer {
         endRender();
         //batch.end();
     }
+
+
 }
 
 
