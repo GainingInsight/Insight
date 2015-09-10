@@ -33,6 +33,7 @@ public class PlayerScreen extends ScreenAdapter {
     private PlayerRenderer renderer;
     private OrthographicCamera camera;
     private Sprite playerNS;
+    private PlayerController controller;
 
 
     public PlayerScreen (InsightGame game){
@@ -42,13 +43,16 @@ public class PlayerScreen extends ScreenAdapter {
         map = new TmxMapLoader().load("map.tmx");
 
         //spriteBatch = new SpriteBatch();
-        texture = new Texture("badlogic.jpg");
+        texture = new Texture("testSprite.png");
         playerNS = new Sprite(texture);
-        playerNS.setPosition(20,20);
+        playerNS.setPosition(100,100);
 
         //initialize player + map renderer
+        //TODO: add world units parameter to PlayerRenderer
         renderer = new PlayerRenderer(map);
+        controller = new PlayerController();
         renderer.addSprite(playerNS);
+
     }
 
     @Override
@@ -76,23 +80,19 @@ public class PlayerScreen extends ScreenAdapter {
 
     @Override
     public void render (float delta) {
-
-        //TODO: Add for player movement
-        // controller for player movement
-        float deltaTime = Gdx.graphics.getDeltaTime();
-        PlayerController.update(playerNS, deltaTime);
-
         // clear screen
         Gdx.gl.glClearColor(0.7f, 0.7f, 1.0f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
+        // controller for player movement
+        float deltaTime = Gdx.graphics.getDeltaTime();
+        controller.update(playerNS, map, deltaTime);
+
         // render map
-        //TEST
         camera.update();
         renderer.setView(camera);
         renderer.render();
-
-
+        
         stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
         stage.draw();
     }
