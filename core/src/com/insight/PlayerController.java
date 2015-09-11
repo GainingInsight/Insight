@@ -40,44 +40,40 @@ public class PlayerController {
         this.map = map;
         float height = player.getHeight();
         float width = player.getWidth();
+        boolean facesLeft = true;
         boolean moving = false;
 
 
         //
         // movement
         //
-
         // move left
         if (Gdx.input.isKeyPressed(Keys.LEFT)){
-            //player.isMoving(true);
-            //player.setDirection(false);
             spriteVelocityX = -10f;
+            facesLeft = true;
             moving = true;
         }
 
         // move right
         if (Gdx.input.isKeyPressed(Keys.RIGHT)){
-            //player.isMoving(true);
-            //player.setDirection(true);
             spriteVelocityX = 10f;
+            facesLeft = false;
             moving = true;
         }
 
         // move up
         if (Gdx.input.isKeyPressed(Keys.UP)){
-            //player.isMoving(true);
-            //player.setDirection(true);
             spriteVelocityY = 10f;
             moving = true;
         }
 
         // move down
         if (Gdx.input.isKeyPressed(Keys.DOWN)){
-            //player.isMoving(true);
-            //player.setDirection(true);
             spriteVelocityY = -10f;
             moving = true;
         }
+        // Face player left or right
+        if(moving) player.setFlip(facesLeft,false);
 
         // sprite standing still
         if (Math.abs(spriteVelocityX) < 1) {

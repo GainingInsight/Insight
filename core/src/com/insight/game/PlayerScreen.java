@@ -25,6 +25,7 @@ public class PlayerScreen extends ScreenAdapter {
     Skin skin;
     SpriteBatch spriteBatch;
     Texture texture;
+    Texture textureLeft;
 
     InsightGame game;
     //TODO: handle walking + standing sprite animations
@@ -44,6 +45,7 @@ public class PlayerScreen extends ScreenAdapter {
 
         //spriteBatch = new SpriteBatch();
         texture = new Texture("testSprite.png");
+        textureLeft = new Texture("testSpriteLeft.png");
         playerNS = new Sprite(texture);
         playerNS.setPosition(100,100);
 
