@@ -16,7 +16,7 @@ public class InsightGame extends Game {
 
 	@Override
 	public void create () {
-    //Assets.load();
+    Assets.load();
     setScreen(new LoginScreen(this));
 	}
 

@@ -92,7 +92,7 @@ public class PlayerScreen extends ScreenAdapter {
         camera.update();
         renderer.setView(camera);
         renderer.render();
-        
+
         stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
         stage.draw();
     }

@@ -35,7 +35,7 @@
  </layer>
  <layer name="Walls" width="80" height="60">
   <data encoding="base64" compression="zlib">
-   eJzt3EuKwlAQQFHp3Wjbbsjv/lfRb2AgCA7iFYxwDhQhNQmESyCTt/3ZbHZjtvfr75j9mL8xB/un++n+OOY0u57HXMZcx9zsn+6n++k9ssxjfyyjv0Z/jf4a/TX6a/TX6K+Z9/eJf6I1PfMV8/4+8U+0pmfW/nz/lvP9a/TX6K/RX6O/Rn+N/hr9Nfpr9Nfor9Ffo79Gf43+Gv01+mv01+iv0V+jv0Z/jf4a/TX6a/TX6K/RX6O/Rn+N/hr9Nfpr9Nfor9Ffo79Gf43+Gv01+mv01+iv0V/z2N9azvX5lr3zh95z/tA/acW2jQ==
+   eJzt3FkKgzAAAFHxNul2oa5H6pGbj4aKuBDHxoUZCMUgEewrJXQJdVUd4gjfx2McpzjOcVyc751Px9c4bo3HexyPOJ5xvJzvnU/H6T5aXm1/lpf+WPpj6Y+lP5b+WPpj6Y+V7lvo2JuU2BOt6ZpTavpbYk8019phhmsSf+3XcRh5Hvu8pvnS+/ec8/7lr3kfpz6POQ7m3L/nnPdPf5ZXifffd/0be6uEvz3fP/2x9MfSH0t/LP2x9MfSH0t/LP2x9MfSH0t/LP2x9MfSH0t/LP2x9MfSH0t/LL//wvLzX5b+WPpj6Y+lP5b+WPpj6Y+lP5b+WPpj6Y+lP5b+WPpj6Y+lP1bX77bW8nu+0msPnTu2zpL//7KWtYfOHVtnSX9bnl+Dvy3Pp+MPKf8n+w==
   </data>
  </layer>
  <layer name="Tile Layer 2" width="80" height="60">
