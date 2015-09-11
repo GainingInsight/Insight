@@ -1,5 +1,7 @@
 package com.insight.networking;
 
+import org.json.simple.JSONObject;
+
 /**
  * Created by jamesyanyuk on 9/6/15.
  */
@@ -9,25 +11,27 @@ public class Message {
   public static final int INITIATION = 1;
 
   private int type;
-  private String jsonString;
+  private JSONObject json;
   private NetworkingToken token;
 
-  public Message(int type, String jsonString) {
-    this.jsonString = jsonString;
+  public Message(int type, JSONObject jsonString) {
+    this.type = type;
+    this.json = json;
   }
 
-  public Message(int type, String jsonString, NetworkingToken token) {
-    this.jsonString = jsonString;
+  public Message(int type, JSONObject json, NetworkingToken token) {
+    this.type = type;
+    this.json = json;
     this.token = token;
   }
 
-  public String getJson() {
-    return jsonString;
+  public JSONObject getJson() {
+    return json;
   }
 
-  public String setJson() {
-    this.jsonString = jsonString;
-    return jsonString;
+  public JSONObject setJson() {
+    this.json = json;
+    return json;
   }
 
   public NetworkingToken getToken() {

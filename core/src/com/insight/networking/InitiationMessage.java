@@ -1,10 +1,19 @@
 package com.insight.networking;
 
+import org.json.simple.JSONObject;
+
 /**
  * Created by jamesyanyuk on 9/8/15.
  */
 public class InitiationMessage extends Message {
-  public InitiationMessage(String jsonString) {
-    super(Message.INITIATION, jsonString, NetworkingStore.instance().getToken());
+  public InitiationMessage() {
+    super(Message.INITIATION, messageString(), NetworkingStore.instance().getToken());
+  }
+
+  public static JSONObject messageString() {
+    JSONObject obj = new JSONObject();
+    // No values needed to be passed through initiation message
+
+    return obj;
   }
 }

@@ -28,9 +28,11 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
-//import com.insight.networking.AuthenticationManager;
+import com.insight.networking.AuthenticationManager;
 import com.insight.networking.InvalidCredentialsException;
 import com.insight.networking.NetworkConnectionException;
+
+import java.util.concurrent.Callable;
 
 public class LoginScreen extends ScreenAdapter {
   Skin skin;
@@ -46,11 +48,11 @@ public class LoginScreen extends ScreenAdapter {
 
   InsightGame game;
 
-  //AuthenticationManager authManager;
+  AuthenticationManager authManager;
 
   public LoginScreen(InsightGame game) {
     this.game = game;
-    //authManager = AuthenticationManager.instance();
+    authManager = AuthenticationManager.instance();
   }
 
   @Override
@@ -171,6 +173,10 @@ public class LoginScreen extends ScreenAdapter {
     loginTextures.dispose();
   }
 
+  private void nextScreen() {
+    switchScreen(game, new PlayerScreen(game));
+  }
+
   private void login() {
     String sessionId = sessionIdField.getText();
     String sessionKey = sessionKeyField.getText();
@@ -187,9 +193,14 @@ public class LoginScreen extends ScreenAdapter {
     // Server will send broadcast to socket room associated to sessionId decoded from token
 
     // Log the user in; return exception if bad credentials, otherwise set token in store
-    /**
     try {
-      authManager.login(sessionId, sessionKey);
+      authManager.login(sessionId, sessionKey, new Callable<Void>() {
+        @Override
+        public Void call() throws Exception {
+          nextScreen();
+          return null;
+        }
+      });
     } catch(InvalidCredentialsException e) {
       // Notify the user of an invalid session id/key combination
       notificationMessageLabel.setText("Invalid session id/key combination!");
@@ -197,7 +208,7 @@ public class LoginScreen extends ScreenAdapter {
     } catch(NetworkConnectionException e) {
       return;
     }
-*/
-    switchScreen(game, new PlayerScreen(game));
+
+    //nextScreen();
   }
 }
