@@ -44,6 +44,7 @@ public class PlayerRenderer extends OrthogonalTiledMapRenderer {
                 if (layer instanceof TiledMapTileLayer) {
                     renderTileLayer((TiledMapTileLayer)layer);
                     currentLayer++;
+                    //TODO: walls layer < ornamental layer --> check to see if issue with collisions
                     if(currentLayer == drawSpritesAfterLayer){
                         for(Sprite sprite : sprites)
                             sprite.draw(this.getBatch());
@@ -56,7 +57,13 @@ public class PlayerRenderer extends OrthogonalTiledMapRenderer {
             }
         }
         endRender();
-        //batch.end();
+
+        /** TEST
+        Batch batch = this.getBatch();
+        batch.begin();
+        batch.draw(sprite.getTexture(), sprite.getX(), sprite.getY(), sprite.getWidth(), sprite.getHeight());
+        batch.end();
+        */
     }
 
 
