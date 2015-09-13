@@ -4,6 +4,7 @@ import io.socket.client.*;
 import io.socket.emitter.Emitter;
 import org.omg.PortableInterceptor.SYSTEM_EXCEPTION;
 
+import java.net.Socket;
 import java.net.URISyntaxException;
 
 /**

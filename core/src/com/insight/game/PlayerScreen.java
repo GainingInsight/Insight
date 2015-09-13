@@ -25,7 +25,6 @@ public class PlayerScreen extends ScreenAdapter {
     Skin skin;
     SpriteBatch spriteBatch;
     Texture texture;
-    Texture textureLeft;
 
     InsightGame game;
     //TODO: handle walking + standing sprite animations
@@ -34,6 +33,7 @@ public class PlayerScreen extends ScreenAdapter {
     private PlayerRenderer renderer;
     private OrthographicCamera camera;
     private Sprite playerNS;
+    private Sprite overlayNS;
     private PlayerController controller;
 
 
@@ -45,9 +45,9 @@ public class PlayerScreen extends ScreenAdapter {
 
         //spriteBatch = new SpriteBatch();
         texture = new Texture("testSprite.png");
-        textureLeft = new Texture("testSpriteLeft.png");
         playerNS = new Sprite(texture);
         playerNS.setPosition(100,100);
+
 
         //initialize player + map renderer
         //TODO: add world units parameter to PlayerRenderer
@@ -89,6 +89,8 @@ public class PlayerScreen extends ScreenAdapter {
         // controller for player movement
         float deltaTime = Gdx.graphics.getDeltaTime();
         controller.update(playerNS, map, deltaTime);
+        //TEST OVERLAY FOLLOWING PLAYER
+        overlayNS.setPosition(playerNS.getX(),playerNS.getY());
 
         // render map
         camera.update();
