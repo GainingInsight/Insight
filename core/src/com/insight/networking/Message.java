@@ -9,6 +9,7 @@ public class Message {
   // Message type constants
   public static final int MOVEMENT = 0;
   public static final int INITIATION = 1;
+  public static final int GAME_START = 2;
 
   private int type;
   private JSONObject json;
@@ -50,5 +51,18 @@ public class Message {
   public int setType(int type) {
     this.type = type;
     return type;
+  }
+
+  public JSONObject getMessage() {
+    // Message structure:
+    //    data: JSONObject,
+    //    token: String (if exists)
+    JSONObject message = new JSONObject();
+
+    message.put("data", json);
+    if(token != null)
+      message.put("token", token.getValue());
+
+    return message;
   }
 }

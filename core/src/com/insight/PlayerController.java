@@ -1,5 +1,6 @@
 package com.insight;
 
+import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.maps.MapLayer;
 import com.insight.game.objects.*;
 import com.badlogic.gdx.Gdx;
@@ -32,10 +33,8 @@ public class PlayerController {
     };
     private Array<Rectangle> tiles = new Array<Rectangle>();
 
-
-    //TODO: have movement speed use deltaTime instead depending on render speed
     public void update(Sprite player, TiledMap map, float deltaTime){
-        if(deltaTime==0) return;
+        if(deltaTime == 0) return;
 
         this.map = map;
         float height = player.getHeight();
@@ -49,27 +48,27 @@ public class PlayerController {
         //
         // move left
         if (Gdx.input.isKeyPressed(Keys.LEFT)){
-            spriteVelocityX = -10f;
+            spriteVelocityX = -4f;
             facesLeft = true;
             moving = true;
         }
 
         // move right
         if (Gdx.input.isKeyPressed(Keys.RIGHT)){
-            spriteVelocityX = 10f;
+            spriteVelocityX = 4f;
             facesLeft = false;
             moving = true;
         }
 
         // move up
         if (Gdx.input.isKeyPressed(Keys.UP)){
-            spriteVelocityY = 10f;
+            spriteVelocityY = 4f;
             moving = true;
         }
 
         // move down
         if (Gdx.input.isKeyPressed(Keys.DOWN)){
-            spriteVelocityY = -10f;
+            spriteVelocityY = -4f;
             moving = true;
         }
         // Face player left or right
@@ -81,8 +80,8 @@ public class PlayerController {
             moving = false;
         }
         // upper bound on x-axis velocity
-        if (Math.abs(spriteVelocityX) > 10f) {
-            spriteVelocityX = Math.signum(spriteVelocityX) * 10f;
+        if (Math.abs(spriteVelocityX) > 4f) {
+            spriteVelocityX = Math.signum(spriteVelocityX) * 4f;
         }
 
         //
@@ -146,8 +145,8 @@ public class PlayerController {
 
         // Apply damping to the velocity on the x-axis and y-axis so we don't
         // walk infinitely once a key was pressed
-        spriteVelocityX *= 0.87f;
-        spriteVelocityY *= 0.87f;
+        spriteVelocityX *= 0.67f;
+        spriteVelocityY *= 0.67f;
     }
     private void getTiles (int startX, int startY, int endX, int endY, Array<Rectangle> tiles) {
         TiledMapTileLayer layer = (TiledMapTileLayer)map.getLayers().get("Walls");

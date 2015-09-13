@@ -35,7 +35,10 @@ public class AuthenticationManager {
     // Otherwise, store the returned token in the NetworkingStore
     HttpRequestBuilder requestBuilder = new HttpRequestBuilder();
     final Callable<Void> nextScreenFinal = nextScreen;
-    final Net.HttpRequest httpRequest = requestBuilder.newRequest().method(Net.HttpMethods.GET).url("http://localhost:3000/session/auth/login").content("session_id=1&session_key").build();
+
+    String content = "session_id=" + sessionId + "&session_key=" + sessionKey;
+
+    final Net.HttpRequest httpRequest = requestBuilder.newRequest().method(Net.HttpMethods.GET).url("http://localhost:3000/session/auth/login").content(content).build();
 
     try {
       Gdx.net.sendHttpRequest(httpRequest, new Net.HttpResponseListener() {
