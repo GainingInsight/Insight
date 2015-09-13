@@ -192,23 +192,36 @@ public class LoginScreen extends ScreenAdapter {
     // Server will act on user:sessionKey associated to sessionId (both decoded from token)
     // Server will send broadcast to socket room associated to sessionId decoded from token
 
+    // Notify the user that his login request is being processed
+    notificationMessageLabel.setColor(Color.CYAN);
+    notificationMessageLabel.setText("Logging you in, please wait...");
+
     // Log the user in; return exception if bad credentials, otherwise set token in store
     try {
-      authManager.login(sessionId, sessionKey, new Callable<Void>() {
-        @Override
-        public Void call() throws Exception {
-          nextScreen();
-          return null;
+      authManager.login(sessionId, sessionKey,
+        // On success
+        new Callable<Void>() {
+          @Override
+          public Void call() throws Exception {
+            nextScreen();
+            return null;
+          }
+        },
+        // On failure
+        new Callable<Void>() {
+          @Override
+          public Void call() throws Exception {
+            // Notify the user of an invalid session id/key combination
+            notificationMessageLabel.setColor(Color.RED);
+            notificationMessageLabel.setText("Invalid session id/key combination!");
+            return null;
+          }
         }
-      });
+      );
     } catch(InvalidCredentialsException e) {
-      // Notify the user of an invalid session id/key combination
-      notificationMessageLabel.setText("Invalid session id/key combination!");
       return;
     } catch(NetworkConnectionException e) {
       return;
     }
-
-    //nextScreen();
   }
 }

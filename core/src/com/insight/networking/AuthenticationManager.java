@@ -29,13 +29,15 @@ public class AuthenticationManager {
     return instance;
   }
 
-  public void login(final String sessionId, String sessionKey, Callable<Void> nextScreen) throws InvalidCredentialsException, NetworkConnectionException {
+  public void login(final String sessionId, String sessionKey, final Callable<Void> onSuccess, final Callable<Void> onFailure) throws InvalidCredentialsException, NetworkConnectionException {
     // Make request to the server for an access token
     // If 500 returned, throw an InvalidCredentialsException
     // Otherwise, store the returned token in the NetworkingStore
     HttpRequestBuilder requestBuilder = new HttpRequestBuilder();
-    final Callable<Void> nextScreenFinal = nextScreen;
-    final Net.HttpRequest httpRequest = requestBuilder.newRequest().method(Net.HttpMethods.GET).url("http://localhost:3000/session/auth/login").content("session_id=1&session_key").build();
+
+    String content = "session_id=" + sessionId + "&session_key=" + sessionKey;
+
+    final Net.HttpRequest httpRequest = requestBuilder.newRequest().method(Net.HttpMethods.GET).url("http://localhost:3000/session/auth/login").content(content).build();
 
     try {
       Gdx.net.sendHttpRequest(httpRequest, new Net.HttpResponseListener() {
@@ -46,6 +48,10 @@ public class AuthenticationManager {
             case 404:
               throw new RuntimeException(new NetworkConnectionException());
             case 500:
+              try {
+                onFailure.call();
+              } catch(Exception e) {}
+
               throw new RuntimeException(new InvalidCredentialsException());
             case 200:
               System.out.println("Received 200");
@@ -66,19 +72,8 @@ public class AuthenticationManager {
 
               // Initiate connection to server
               Message initMessage = new InitiationMessage();
+              sessionManager.listenForSessionStart(onSuccess);
               sessionManager.send(initMessage);
-
-              // Call the next screen after logging in
-              Gdx.app.postRunnable(new Runnable() {
-                @Override
-                public void run() {
-                  try {
-                    nextScreenFinal.call();
-                  } catch(Exception e) {
-                    System.out.println(e.getMessage());
-                  }
-                }
-              });
             default:
               throw new RuntimeException(new NetworkConnectionException());
           }
