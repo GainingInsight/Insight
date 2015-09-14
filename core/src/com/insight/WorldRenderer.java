@@ -1,9 +1,5 @@
 package com.insight;
 
-/**
- * Created by Catherine on 9/7/15.
- */
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;

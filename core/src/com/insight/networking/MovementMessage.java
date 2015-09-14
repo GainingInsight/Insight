@@ -2,9 +2,6 @@ package com.insight.networking;
 
 import org.json.simple.JSONObject;
 
-/**
- * Created by jamesyanyuk on 9/8/15.
- */
 public class MovementMessage extends Message {
   public MovementMessage(int playerX, int playerY) {
     super(Message.MOVEMENT, messageJson(playerX, playerY), NetworkingStore.instance().getToken());
