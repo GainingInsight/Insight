@@ -17,7 +17,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-
+import com.insight.networking.SessionManager;
 
 public class PlayerScreen extends ScreenAdapter {
     Stage stage;
@@ -26,6 +26,7 @@ public class PlayerScreen extends ScreenAdapter {
     Texture texture;
     Texture overlayNSTexture;
 
+    SessionManager session;
     InsightGame game;
     //TODO: handle walking + standing sprite animations
     int state;
@@ -38,9 +39,10 @@ public class PlayerScreen extends ScreenAdapter {
     private Sprite overlayFS;
     private PlayerController controller;
 
-
     public PlayerScreen (InsightGame game){
         this.game = game;
+
+        session = SessionManager.instance();
 
         // load map texture TMX file
         map = new TmxMapLoader().load("map.tmx");
@@ -51,6 +53,8 @@ public class PlayerScreen extends ScreenAdapter {
         playerNS = new Sprite(texture);
         playerNS.setPosition(50,750);
         overlayNS = new Sprite (overlayNSTexture);
+
+
 
 
 
@@ -68,12 +72,25 @@ public class PlayerScreen extends ScreenAdapter {
       stage = new Stage(new ScreenViewport());
       skin = new Skin(Gdx.files.internal("uiskin.json"));
 
-      Label testLabel = new Label("Test label:", skin);
+      Label titleLabel = new Label("Session Title: " + session.title, skin);
+      Label descriptionLabel = new Label("Session Description: " + session.description, skin);
+      Label sessionIdLabel = new Label("Session ID: " + session.sessionId, skin);
+      Label sessionKeyLabel = new Label("Session Key: " + session.sessionKey, skin);
+      Label clientRoleLabel = new Label("Session Role: " + session.clientRole, skin);
+
       Table t = new Table();
-      t.add(testLabel).align(Align.left).width(200);
+      t.add(titleLabel).align(Align.left).width(600);
+      t.row();
+      t.add(descriptionLabel).align(Align.left).width(600);
+      t.row();
+      t.add(sessionIdLabel).align(Align.left).width(600);
+      t.row();
+      t.add(sessionKeyLabel).align(Align.left).width(600);
+      t.row();
+      t.add(clientRoleLabel).align(Align.left).width(600);
       t.layout();
       stage.addActor(t);
-      t.setPosition(110, 20);
+      t.setPosition(320, 520);
 
       // Fade in the stage
       stage.getRoot().setColor(1, 1, 1, 0);
@@ -116,6 +133,5 @@ public class PlayerScreen extends ScreenAdapter {
     @Override
     public void dispose () {
         stage.dispose();
-
     }
 }

@@ -71,6 +71,7 @@ public class AuthenticationManager {
               System.out.println("Sending initiation message to server...");
 
               // Initiate connection to server
+              sessionManager.startSocketServer(networkingStore.getToken());
               Message initMessage = new InitiationMessage();
               sessionManager.listenForSessionStart(onSuccess);
               sessionManager.send(initMessage);

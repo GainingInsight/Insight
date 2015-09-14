@@ -9,7 +9,8 @@ public class Message {
   // Message type constants
   public static final int MOVEMENT = 0;
   public static final int INITIATION = 1;
-  public static final int GAME_START = 2;
+  public static final int SESSION_START = 2;
+  public static final int SESSION_DATA = 3;
 
   private int type;
   private JSONObject json;
