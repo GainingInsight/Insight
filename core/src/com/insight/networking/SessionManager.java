@@ -17,9 +17,20 @@ public class SessionManager {
   Socket socket;
   static String serverAddress = "http://localhost:3000";
 
-  private SessionManager() {
+  private SessionManager() {}
+
+  public static SessionManager instance() {
+    if(instance == null)
+      instance = new SessionManager();
+    return instance;
+  }
+
+  public void startSocketServer(NetworkingToken token) {
     try {
-      socket = IO.socket(serverAddress);
+      IO.Options socketOptions = new IO.Options();
+      socketOptions.forceNew = true;
+      socketOptions.query = "token=" + token.getValue();
+        socket = IO.socket(serverAddress, socketOptions);
       socket.connect();
 
       socket.on(Socket.EVENT_CONNECT, new Emitter.Listener() {
@@ -31,12 +42,6 @@ public class SessionManager {
     } catch(URISyntaxException e) {
       System.out.println(e.getMessage());
     }
-  }
-
-  public static SessionManager instance() {
-    if(instance == null)
-      instance = new SessionManager();
-    return instance;
   }
 
   public void listenForSessionStart(Callable<Void> nextScreen) {
