@@ -4,7 +4,9 @@ package com.insight;
  * Created by Catherine on 9/7/15.
  */
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
@@ -19,12 +21,14 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PlayerRenderer extends OrthogonalTiledMapRenderer {
+public class WorldRenderer extends OrthogonalTiledMapRenderer {
     private Sprite sprite;
     private List<Sprite> sprites;
-    private int drawSpritesAfterLayer = 1;
+    private int drawSpritesAfterLayer = 2;
+    float stateTime = 0f;
 
-    public PlayerRenderer(TiledMap map) {
+
+    public WorldRenderer(TiledMap map) {
         super(map);
         sprites = new ArrayList<Sprite>();
     }
@@ -36,6 +40,7 @@ public class PlayerRenderer extends OrthogonalTiledMapRenderer {
     @Override
     public void render() {
         beginRender();
+        stateTime += Gdx.graphics.getDeltaTime();
         //batch.begin();
         int currentLayer = 0;
 
@@ -46,8 +51,9 @@ public class PlayerRenderer extends OrthogonalTiledMapRenderer {
                     currentLayer++;
                     //TODO: walls layer < ornamental layer --> check to see if issue with collisions
                     if(currentLayer == drawSpritesAfterLayer){
-                        for(Sprite sprite : sprites)
+                        for(Sprite sprite : sprites) {
                             sprite.draw(this.getBatch());
+                        }
                     }
                 } else {
                     for (MapObject object : layer.getObjects()) {
@@ -57,16 +63,7 @@ public class PlayerRenderer extends OrthogonalTiledMapRenderer {
             }
         }
         endRender();
-
-        /** TEST
-        Batch batch = this.getBatch();
-        batch.begin();
-        batch.draw(sprite.getTexture(), sprite.getX(), sprite.getY(), sprite.getWidth(), sprite.getHeight());
-        batch.end();
-        */
     }
-
-
 }
 
 

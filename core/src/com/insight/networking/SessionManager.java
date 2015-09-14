@@ -5,7 +5,6 @@ import io.socket.client.*;
 import io.socket.emitter.Emitter;
 import org.json.simple.*;
 
-import java.net.Socket;
 import java.net.URISyntaxException;
 import java.util.concurrent.Callable;
 

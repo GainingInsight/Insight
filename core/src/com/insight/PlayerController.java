@@ -1,8 +1,5 @@
 package com.insight;
 
-import com.badlogic.gdx.InputProcessor;
-import com.badlogic.gdx.maps.MapLayer;
-import com.insight.game.objects.*;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.math.Vector2;
@@ -21,17 +18,19 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 //TODO: refactor for multiplayer -- call twice from PlayerController w/ two diff inputs? Handle here by moving the correct player given xyz?
 
 public class PlayerController {
-    float spriteVelocityY = 0;
-    float spriteVelocityX = 0;
-    Vector2 spriteVelocity = new Vector2(spriteVelocityX,spriteVelocityY);
-    TiledMap map;
-    Pool<Rectangle> rectPool = new Pool<Rectangle>() {
+
+    private float spriteVelocityY = 0;
+    private float spriteVelocityX = 0;
+    private Vector2 spriteVelocity = new Vector2(spriteVelocityX,spriteVelocityY);
+    private TiledMap map;
+    private Pool<Rectangle> rectPool = new Pool<Rectangle>() {
         @Override
         protected Rectangle newObject () {
             return new Rectangle();
         }
     };
     private Array<Rectangle> tiles = new Array<Rectangle>();
+
 
     public void update(Sprite player, TiledMap map, float deltaTime){
         if(deltaTime == 0) return;
@@ -74,7 +73,7 @@ public class PlayerController {
         // Face player left or right
         if(moving) player.setFlip(facesLeft,false);
 
-        // sprite standing still
+        // player standing still
         if (Math.abs(spriteVelocityX) < 1) {
             spriteVelocityX = 0;
             moving = false;

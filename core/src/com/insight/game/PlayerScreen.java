@@ -11,7 +11,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.insight.*;
-import com.insight.game.objects.*;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -25,15 +24,18 @@ public class PlayerScreen extends ScreenAdapter {
     Skin skin;
     SpriteBatch spriteBatch;
     Texture texture;
+    Texture overlayNSTexture;
 
     InsightGame game;
     //TODO: handle walking + standing sprite animations
     int state;
     private TiledMap map;
-    private PlayerRenderer renderer;
+    private WorldRenderer renderer;
     private OrthographicCamera camera;
     private Sprite playerNS;
     private Sprite overlayNS;
+    private Sprite playerFS;
+    private Sprite overlayFS;
     private PlayerController controller;
 
 
@@ -45,15 +47,19 @@ public class PlayerScreen extends ScreenAdapter {
 
         //spriteBatch = new SpriteBatch();
         texture = new Texture("testSprite.png");
+        overlayNSTexture = new Texture("NSoverlay.png");
         playerNS = new Sprite(texture);
-        playerNS.setPosition(100,100);
+        playerNS.setPosition(50,750);
+        overlayNS = new Sprite (overlayNSTexture);
+
 
 
         //initialize player + map renderer
-        //TODO: add world units parameter to PlayerRenderer
-        renderer = new PlayerRenderer(map);
+        //TODO: add world units parameter to WorldRenderer
+        renderer = new WorldRenderer(map);
         controller = new PlayerController();
         renderer.addSprite(playerNS);
+        renderer.addSprite(overlayNS);
 
     }
 
@@ -89,8 +95,9 @@ public class PlayerScreen extends ScreenAdapter {
         // controller for player movement
         float deltaTime = Gdx.graphics.getDeltaTime();
         controller.update(playerNS, map, deltaTime);
-        //TEST OVERLAY FOLLOWING PLAYER
-        overlayNS.setPosition(playerNS.getX(),playerNS.getY());
+        // visual scope for near-sighted player
+        overlayNS.setCenter(playerNS.getX(),playerNS.getY());
+
 
         // render map
         camera.update();
