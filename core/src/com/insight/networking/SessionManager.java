@@ -3,7 +3,7 @@ package com.insight.networking;
 import com.badlogic.gdx.Gdx;
 import io.socket.client.*;
 import io.socket.emitter.Emitter;
-import org.json.simple.*;
+import org.json.*;
 
 import java.net.URISyntaxException;
 import java.util.concurrent.Callable;
@@ -16,6 +16,12 @@ public class SessionManager {
 
   Socket socket;
   static String serverAddress = "http://localhost:3000";
+
+  public String title;
+  public String description;
+  public String sessionId;
+  public String sessionKey;
+  public String clientRole;
 
   private SessionManager() {}
 
@@ -44,11 +50,32 @@ public class SessionManager {
     }
   }
 
+  public void setSessionData(JSONObject obj) {
+    try {
+      title = (String) obj.get("title");
+      description = (String) obj.get("description");
+      sessionId = (String) obj.get("sessionId");
+      sessionKey = (String) obj.get("sessionKey");
+      clientRole = (String) obj.get("clientRole");
+    } catch(JSONException e) {
+      System.out.println(e.getMessage());
+    }
+  }
+
   public void listenForSessionStart(Callable<Void> nextScreen) {
     // Call the next screen once game has begun
     final Callable<Void> nextScreenFinal = nextScreen;
 
-    socket.on(Integer.toString(Message.GAME_START), new Emitter.Listener() {
+    socket.on(Integer.toString(Message.SESSION_DATA), new Emitter.Listener() {
+      @Override
+      public void call(Object[] objects) {
+        // Received initial session data
+        JSONObject obj = (JSONObject)objects[0];
+        setSessionData(obj);
+      }
+    });
+
+    socket.on(Integer.toString(Message.SESSION_START), new Emitter.Listener() {
       @Override
       public void call(Object[] objects) {
         // All players ready, game session will now start
