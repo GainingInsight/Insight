@@ -27,8 +27,8 @@ public class SessionManager {
 
   private SessionManager() {
     playerGroup = new HashMap();
-    playerGroup.put("currentPlayer", new Avatar());
-    playerGroup.put("otherPlayer", new Avatar());
+    playerGroup.put("playerNS", new Avatar());
+    playerGroup.put("playerFS", new Avatar());
   }
 
   public static SessionManager instance() {
@@ -99,6 +99,43 @@ public class SessionManager {
             }
           }
         });
+      }
+    });
+  }
+
+  public void listenForMovement() {
+    socket.on(Integer.toString(Message.MOVEMENT), new Emitter.Listener() {
+      @Override
+      public void call(Object[] objects) {
+        System.out.println("Received movement message.");
+        JSONObject obj = (JSONObject)objects[0];
+        try {
+          Avatar player;
+          if(obj.getString("clientRole").equals("playerNS"))
+            player = playerGroup.get("playerNS");
+          else
+            player = playerGroup.get("playerFS");
+
+          player.setPosition(obj.getInt("playerX"), obj.getInt("playerY"));
+
+          boolean pressed = obj.getBoolean("pressed");
+          switch(obj.getInt("key")) {
+            case Message.KEY_LEFT:
+              player.keyLeftPressed = pressed;
+              break;
+            case Message.KEY_RIGHT:
+              player.keyRightPressed = pressed;
+              break;
+            case Message.KEY_UP:
+              player.keyUpPressed = pressed;
+              break;
+            case Message.KEY_DOWN:
+              player.keyDownPressed = pressed;
+              break;
+          }
+        } catch(JSONException e) {
+          System.out.println(e.getMessage());
+        }
       }
     });
   }

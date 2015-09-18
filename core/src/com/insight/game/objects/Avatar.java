@@ -15,7 +15,7 @@ public class Avatar {
     private Sprite playerSprite;
     private boolean moving;
 
-    public static Vector2 START_POSITION = new Vector2(50, 230);
+    public static Vector2 START_POSITION = new Vector2(50, 220);
 
     enum State {
         Standing, Walking
@@ -28,6 +28,10 @@ public class Avatar {
     float stateTime = 0;
     boolean facesLeft = true;
 
+    public boolean keyLeftPressed = false;
+    public boolean keyRightPressed = false;
+    public boolean keyUpPressed = false;
+    public boolean keyDownPressed = false;
 
     public Avatar() {
         position.x = 50;
@@ -47,7 +51,8 @@ public class Avatar {
     }
 
     public void setPosition(float xPos, float yPos){
-        playerSprite.setPosition(xPos, yPos);
+      System.out.println("B: " + this);
+      playerSprite.setPosition(xPos, yPos);
     }
 
     public void setStateTime(float time){

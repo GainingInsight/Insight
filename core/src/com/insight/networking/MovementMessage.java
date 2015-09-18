@@ -3,14 +3,18 @@ package com.insight.networking;
 import org.json.simple.JSONObject;
 
 public class MovementMessage extends Message {
-  public MovementMessage(int playerX, int playerY) {
-    super(Message.MOVEMENT, messageJson(playerX, playerY), NetworkingStore.instance().getToken());
+  public MovementMessage(int key, boolean pressed, float playerX, float playerY) {
+    super(Message.MOVEMENT_SET, messageJson(key, pressed, (int)playerX, (int)playerY), NetworkingStore.instance().getToken());
   }
 
-  public static JSONObject messageJson(int playerX, int playerY) {
+  public static JSONObject messageJson(int key, boolean pressed, int playerX, int playerY) {
     JSONObject obj = new JSONObject();
-    obj.put("x", new Integer(playerX));
-    obj.put("y", new Integer(playerY));
+
+    obj.put("playerX", new Integer(playerX));
+    obj.put("playerY", new Integer(playerY));
+
+    obj.put("key", new Integer(key));
+    obj.put("pressed", new Boolean(pressed));
 
     return obj;
   }

@@ -8,6 +8,13 @@ public class Message {
   public static final int INITIATION = 1;
   public static final int SESSION_START = 2;
   public static final int SESSION_DATA = 3;
+  public static final int MOVEMENT_SET = 4;
+
+  // Key constants
+  public static final int KEY_LEFT = 100;
+  public static final int KEY_RIGHT = 101;
+  public static final int KEY_UP = 102;
+  public static final int KEY_DOWN = 103;
 
   private int type;
   private JSONObject json;

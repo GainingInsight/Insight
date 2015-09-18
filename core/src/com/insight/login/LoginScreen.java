@@ -28,9 +28,11 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
+import com.insight.game.ResearcherScreen;
 import com.insight.networking.AuthenticationManager;
 import com.insight.networking.InvalidCredentialsException;
 import com.insight.networking.NetworkConnectionException;
+import com.insight.networking.SessionManager;
 
 import java.util.concurrent.Callable;
 
@@ -49,10 +51,12 @@ public class LoginScreen extends ScreenAdapter {
   InsightGame game;
 
   AuthenticationManager authManager;
+  SessionManager session;
 
   public LoginScreen(InsightGame game) {
     this.game = game;
     authManager = AuthenticationManager.instance();
+    session = SessionManager.instance();
   }
 
   @Override
@@ -174,7 +178,11 @@ public class LoginScreen extends ScreenAdapter {
   }
 
   private void nextScreen() {
-    switchScreen(game, new PlayerScreen(game));
+    if(session.clientRole == "researcher") {
+      System.out.println("Switching to researcher screen.");
+      switchScreen(game, new ResearcherScreen(game));
+    } else
+      switchScreen(game, new PlayerScreen(game));
   }
 
   private void login() {

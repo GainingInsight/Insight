@@ -46,8 +46,13 @@ public class PlayerScreen extends ScreenAdapter {
 
         session = SessionManager.instance();
 
-        currentPlayer = session.getPlayers().get("currentPlayer");
-        otherPlayer = session.getPlayers().get("otherPlayer");
+      if(session.clientRole == "playerNS") {
+        currentPlayer = session.getPlayers().get("playerNS");
+        otherPlayer = session.getPlayers().get("playerFS");
+      } else {
+        currentPlayer = session.getPlayers().get("playerFS");
+        otherPlayer = session.getPlayers().get("playerNS");
+      }
 
         // load map texture TMX file
         map = new TmxMapLoader().load("map.tmx");
@@ -60,22 +65,26 @@ public class PlayerScreen extends ScreenAdapter {
         currentPlayer.setPlayerSprite(new Sprite(texture));
         otherPlayer.setPlayerSprite(new Sprite(texture));
 
+        System.out.println("BBB: " + currentPlayer + ", " + otherPlayer);
+
         currentPlayer.setPosition(Avatar.START_POSITION.x, Avatar.START_POSITION.y);
         otherPlayer.setPosition(Avatar.START_POSITION.x, Avatar.START_POSITION.y);
+
+        stage = new Stage(new ScreenViewport());
+        skin = new Skin(Gdx.files.internal("uiskin.json"));
 
         //initialize player + map renderer
         //TODO: add world units parameter to WorldRenderer
         renderer = new WorldRenderer(map);
-        controller = new PlayerController();
+        controller = new PlayerController(stage);
         renderer.addSprite(currentPlayer.getPlayerSprite());
         renderer.addSprite(otherPlayer.getPlayerSprite());
+
+        session.listenForMovement();
     }
 
     @Override
     public void show() {
-      stage = new Stage(new ScreenViewport());
-      skin = new Skin(Gdx.files.internal("uiskin.json"));
-
       Label titleLabel = new Label("Session Title: " + session.title, skin);
       Label descriptionLabel = new Label("Session Description: " + session.description, skin);
       Label sessionIdLabel = new Label("Session ID: " + session.sessionId, skin);
@@ -115,7 +124,7 @@ public class PlayerScreen extends ScreenAdapter {
 
         // controller for player movement
         float deltaTime = Gdx.graphics.getDeltaTime();
-        controller.update(session.getPlayers(), map, deltaTime);
+        controller.update(map, deltaTime);
         // visual scope for near-sighted player
         overlayNS.setCenter(currentPlayer.getX(), currentPlayer.getY());
 
