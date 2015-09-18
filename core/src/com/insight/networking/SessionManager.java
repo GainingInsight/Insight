@@ -8,9 +8,6 @@ import org.json.*;
 import java.net.URISyntaxException;
 import java.util.concurrent.Callable;
 
-/**
- * Created by jamesyanyuk on 9/6/15.
- */
 public class SessionManager {
   private static SessionManager instance = null;
 

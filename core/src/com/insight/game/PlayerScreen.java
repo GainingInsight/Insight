@@ -51,7 +51,7 @@ public class PlayerScreen extends ScreenAdapter {
         texture = new Texture("testSprite.png");
         overlayNSTexture = new Texture("NSoverlay.png");
         playerNS = new Sprite(texture);
-        playerNS.setPosition(50,750);
+        playerNS.setPosition(50,530);
         overlayNS = new Sprite (overlayNSTexture);
 
 

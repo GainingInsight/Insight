@@ -2,9 +2,6 @@ package com.insight.networking;
 
 import org.json.simple.JSONObject;
 
-/**
- * Created by jamesyanyuk on 9/6/15.
- */
 public class Message {
   // Message type constants
   public static final int MOVEMENT = 0;

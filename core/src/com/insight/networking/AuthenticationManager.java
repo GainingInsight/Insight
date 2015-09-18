@@ -8,10 +8,6 @@ import org.json.simple.JSONValue;
 
 import java.util.concurrent.Callable;
 
-/**
- * Created by jamesyanyuk on 9/6/15.
- */
-
 public class AuthenticationManager {
   private static AuthenticationManager instance = null;
 

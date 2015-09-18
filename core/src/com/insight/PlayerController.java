@@ -11,10 +11,6 @@ import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer.*;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 
-/**
- * Created by Catherine on 9/6/15.
- */
-
 //TODO: refactor for multiplayer -- call twice from PlayerController w/ two diff inputs? Handle here by moving the correct player given xyz?
 
 public class PlayerController {
