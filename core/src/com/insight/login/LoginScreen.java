@@ -120,7 +120,7 @@ public class LoginScreen extends ScreenAdapter {
     });
 
     loginButton.addListener(new ChangeListener() {
-      public void changed (ChangeEvent event, Actor actor) {
+      public void changed(ChangeEvent event, Actor actor) {
         login();
       }
     });

@@ -29,14 +29,12 @@ public class AuthenticationManager {
     return instance;
   }
 
-  public void login(final String sessionId, String sessionKey, final Callable<Void> onSuccess, final Callable<Void> onFailure) throws InvalidCredentialsException, NetworkConnectionException {
+  public void login(String sessionId, String sessionKey, final Callable<Void> onSuccess, final Callable<Void> onFailure) throws InvalidCredentialsException, NetworkConnectionException {
     // Make request to the server for an access token
     // If 500 returned, throw an InvalidCredentialsException
     // Otherwise, store the returned token in the NetworkingStore
     HttpRequestBuilder requestBuilder = new HttpRequestBuilder();
-
     String content = "session_id=" + sessionId + "&session_key=" + sessionKey;
-
     final Net.HttpRequest httpRequest = requestBuilder.newRequest().method(Net.HttpMethods.GET).url("http://localhost:3000/session/auth/login").content(content).build();
 
     try {
