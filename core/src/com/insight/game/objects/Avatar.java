@@ -1,5 +1,6 @@
 package com.insight.game.objects;
 
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.graphics.Texture;
 
@@ -8,13 +9,13 @@ import com.badlogic.gdx.graphics.Texture;
  * Created by Catherine on 9/6/15.
  */
 public class Avatar {
-    private float WIDTH = 30;
-    private float HEIGHT = 30;
     private float MAX_VELOCITY = 10f;
     //private float JUMP_VELOCITY = 40f;
     private float DAMPING = 0.87f;
-    private Texture playerTexture;
+    private Sprite playerSprite;
+    private boolean moving;
 
+    public static Vector2 START_POSITION = new Vector2(50, 230);
 
     enum State {
         Standing, Walking
@@ -25,27 +26,29 @@ public class Avatar {
 
     State state = State.Walking;
     float stateTime = 0;
-    boolean facesRight = true;
+    boolean facesLeft = true;
 
 
-    public Avatar(Texture texture) {
-        playerTexture = texture;
+    public Avatar() {
         position.x = 50;
-        position.y = 100;
-
+        position.y = 530;
     }
-    public void movePosition(Vector2 newVelocity, float deltaTime){
-        position.add(newVelocity);
 
-        velocity.scl(1 / deltaTime);
-        velocity.x *= DAMPING;
+    public void setPlayerSprite(Sprite sprite) {
+      playerSprite = sprite;
+    }
+
+    public Sprite getPlayerSprite() {
+      return playerSprite;
+    }
+
+    public void translate() {
+      playerSprite.translate(velocity.x, velocity.y);
     }
 
     public void setPosition(float xPos, float yPos){
-        position.set(xPos, yPos);
-
+        playerSprite.setPosition(xPos, yPos);
     }
-
 
     public void setStateTime(float time){
         stateTime = time;
@@ -55,26 +58,36 @@ public class Avatar {
         velocity.x = newVelocity;
     }
 
-    public void isMoving(boolean moving){
+    public void setMoving(boolean moving){
         if(moving) state = State.Walking;
         else state = State.Standing;
+
+        this.moving = moving;
     }
 
-    public void setDirection(boolean right){
-        if(right) facesRight = true;
-        else facesRight = false;
+    public boolean getMoving() {
+      return moving;
+    }
+
+    public void setDirection(boolean left){
+        if(left) facesLeft = true;
+        else facesLeft = false;
     }
 
     public float getWidth(){
-        return WIDTH;
-
+        return playerSprite.getWidth();
     }
 
     public float getHeight(){
-        return HEIGHT;
+        return playerSprite.getHeight();
     }
-    public Vector2 getPosition(){
-        return position;
+
+    public float getX(){
+        return playerSprite.getX();
+    }
+
+    public float getY(){
+      return playerSprite.getY();
     }
 
     public Vector2 getVelocity(){
@@ -90,10 +103,6 @@ public class Avatar {
     }
 
     public boolean getDirection(){
-        return facesRight;
-    }
-
-    public Texture getTexture(){
-        return playerTexture;
+        return facesLeft;
     }
 }

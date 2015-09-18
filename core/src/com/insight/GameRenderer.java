@@ -12,17 +12,14 @@ import com.badlogic.gdx.graphics.Texture;
 
 
 public class GameRenderer {
-
     private TiledMap map;
     private OrthogonalTiledMapRenderer mapRenderer;
     private OrthographicCamera camera;
     private Avatar player;
 
-
     public GameRenderer (TiledMap map, Avatar player) {
         this.map = map;
         this.player = player;
-
 
         // top-down renderer for map with 1 unit = 10 pixels
         mapRenderer = new OrthogonalTiledMapRenderer(map, 1 / 10f);
@@ -39,8 +36,7 @@ public class GameRenderer {
     }
 
     public void renderPlayer(){
-        Texture frame = player.getTexture();
-
+        //Texture frame = player.getTexture();
 
         // TODO: texture based on player moving or standing
       //  switch (player.getState()) {
@@ -57,7 +53,7 @@ public class GameRenderer {
        // Batch batch = mapRenderer.getBatch();
         Batch batch = new SpriteBatch();
         batch.begin();
-        batch.draw(frame, player.getPosition().x,player.getPosition().y);
+        //batch.draw(frame, player.getPosition().x,player.getPosition().y);
 
         //TODO: draw avatar based on direction facing
         /**
@@ -68,6 +64,5 @@ public class GameRenderer {
         }
          */
         batch.end();
-
     }
 }

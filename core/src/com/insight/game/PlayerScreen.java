@@ -17,6 +17,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.insight.game.objects.Avatar;
 import com.insight.networking.SessionManager;
 
 public class PlayerScreen extends ScreenAdapter {
@@ -33,16 +34,20 @@ public class PlayerScreen extends ScreenAdapter {
     private TiledMap map;
     private WorldRenderer renderer;
     private OrthographicCamera camera;
-    private Sprite playerNS;
     private Sprite overlayNS;
-    private Sprite playerFS;
     private Sprite overlayFS;
     private PlayerController controller;
+
+    private Avatar currentPlayer;
+    private Avatar otherPlayer;
 
     public PlayerScreen (InsightGame game){
         this.game = game;
 
         session = SessionManager.instance();
+
+        currentPlayer = session.getPlayers().get("currentPlayer");
+        otherPlayer = session.getPlayers().get("otherPlayer");
 
         // load map texture TMX file
         map = new TmxMapLoader().load("map.tmx");
@@ -50,21 +55,20 @@ public class PlayerScreen extends ScreenAdapter {
         //spriteBatch = new SpriteBatch();
         texture = new Texture("testSprite.png");
         overlayNSTexture = new Texture("NSoverlay.png");
-        playerNS = new Sprite(texture);
-        playerNS.setPosition(50,530);
         overlayNS = new Sprite (overlayNSTexture);
 
+        currentPlayer.setPlayerSprite(new Sprite(texture));
+        otherPlayer.setPlayerSprite(new Sprite(texture));
 
-
-
+        currentPlayer.setPosition(Avatar.START_POSITION.x, Avatar.START_POSITION.y);
+        otherPlayer.setPosition(Avatar.START_POSITION.x, Avatar.START_POSITION.y);
 
         //initialize player + map renderer
         //TODO: add world units parameter to WorldRenderer
         renderer = new WorldRenderer(map);
         controller = new PlayerController();
-        renderer.addSprite(playerNS);
-        renderer.addSprite(overlayNS);
-
+        renderer.addSprite(currentPlayer.getPlayerSprite());
+        renderer.addSprite(otherPlayer.getPlayerSprite());
     }
 
     @Override
@@ -111,10 +115,9 @@ public class PlayerScreen extends ScreenAdapter {
 
         // controller for player movement
         float deltaTime = Gdx.graphics.getDeltaTime();
-        controller.update(playerNS, map, deltaTime);
+        controller.update(session.getPlayers(), map, deltaTime);
         // visual scope for near-sighted player
-        overlayNS.setCenter(playerNS.getX(),playerNS.getY());
-
+        overlayNS.setCenter(currentPlayer.getX(), currentPlayer.getY());
 
         // render map
         camera.update();

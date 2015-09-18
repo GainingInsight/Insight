@@ -10,14 +10,14 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer.*;
 import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.insight.game.objects.Avatar;
+import com.insight.networking.SessionManager;
+
+import java.util.HashMap;
 
 //TODO: refactor for multiplayer -- call twice from PlayerController w/ two diff inputs? Handle here by moving the correct player given xyz?
 
 public class PlayerController {
-
-    private float spriteVelocityY = 0;
-    private float spriteVelocityX = 0;
-    private Vector2 spriteVelocity = new Vector2(spriteVelocityX,spriteVelocityY);
     private TiledMap map;
     private Pool<Rectangle> rectPool = new Pool<Rectangle>() {
         @Override
@@ -26,16 +26,22 @@ public class PlayerController {
         }
     };
     private Array<Rectangle> tiles = new Array<Rectangle>();
+    private SessionManager session = SessionManager.instance();
 
 
-    public void update(Sprite player, TiledMap map, float deltaTime){
+    public void update(HashMap<String, Avatar> playerGroup, TiledMap map, float deltaTime){
         if(deltaTime == 0) return;
 
+        Avatar currentPlayer = session.getPlayers().get("currentPlayer");
+        Avatar otherPlayer = session.getPlayers().get("otherPlayer");
+
+        currentPlayer.setDirection(true);
+        otherPlayer.setDirection(true);
+
+        currentPlayer.setMoving(false);
+        otherPlayer.setMoving(false);
+
         this.map = map;
-        float height = player.getHeight();
-        float width = player.getWidth();
-        boolean facesLeft = true;
-        boolean moving = false;
 
 
         //
@@ -43,68 +49,84 @@ public class PlayerController {
         //
         // move left
         if (Gdx.input.isKeyPressed(Keys.LEFT)){
-            spriteVelocityX = -4f;
-            facesLeft = true;
-            moving = true;
+            currentPlayer.getVelocity().x = -4f;
+            currentPlayer.setDirection(true);
+            currentPlayer.setMoving(true);
         }
 
         // move right
         if (Gdx.input.isKeyPressed(Keys.RIGHT)){
-            spriteVelocityX = 4f;
-            facesLeft = false;
-            moving = true;
+            currentPlayer.getVelocity().x = 4f;
+            currentPlayer.setDirection(false);
+            currentPlayer.setMoving(true);
         }
 
         // move up
         if (Gdx.input.isKeyPressed(Keys.UP)){
-            spriteVelocityY = 4f;
-            moving = true;
+            currentPlayer.getVelocity().y = 4f;
+            currentPlayer.setMoving(true);
         }
 
         // move down
         if (Gdx.input.isKeyPressed(Keys.DOWN)){
-            spriteVelocityY = -4f;
-            moving = true;
+            currentPlayer.getVelocity().y = -4f;
+            currentPlayer.setMoving(true);
         }
-        // Face player left or right
-        if(moving) player.setFlip(facesLeft,false);
 
-        // player standing still
-        if (Math.abs(spriteVelocityX) < 1) {
-            spriteVelocityX = 0;
-            moving = false;
+        // Face players left or right
+        currentPlayer.getPlayerSprite().setFlip(currentPlayer.getDirection(), false);
+        otherPlayer.getPlayerSprite().setFlip(otherPlayer.getDirection(), false);
+
+        // current player standing still
+        if (Math.abs(currentPlayer.getVelocity().x) < 1) {
+            currentPlayer.getVelocity().x = 0;
+            currentPlayer.setMoving(false);
         }
-        // upper bound on x-axis velocity
-        if (Math.abs(spriteVelocityX) > 4f) {
-            spriteVelocityX = Math.signum(spriteVelocityX) * 4f;
+
+        // other player standing still
+        if (Math.abs(otherPlayer.getVelocity().x) < 1) {
+          otherPlayer.getVelocity().x = 0;
+          otherPlayer.setMoving(false);
+        }
+
+        // upper bound on x-axis velocity for current player
+        if (Math.abs(currentPlayer.getVelocity().x) > 4f) {
+            currentPlayer.getVelocity().x = Math.signum(currentPlayer.getVelocity().x) * 4f;
+        }
+
+        // upper bound on x-axis velocity for current player
+        if (Math.abs(otherPlayer.getVelocity().x) > 4f) {
+          otherPlayer.getVelocity().x = Math.signum(otherPlayer.getVelocity().x) * 4f;
         }
 
         //
         // x-axis collision detection
         //
         Rectangle spriteBox = rectPool.obtain();
-        spriteBox.set(player.getX(), player.getY(), width, height);
+        spriteBox.set(currentPlayer.getX(), currentPlayer.getY(), currentPlayer.getWidth(), currentPlayer.getHeight());
         int startX, startY, endX, endY;
         // Moving right
-        if (spriteVelocityX > 0) {
-            startX = endX = (int)(player.getX() + width + spriteVelocityX);
+        if (currentPlayer.getVelocity().x > 0) {
+            startX = endX = (int)(currentPlayer.getX() + currentPlayer.getWidth() + currentPlayer.getVelocity().x);
         }
         // Moving left
         else {
-            startX = endX = (int)(player.getX() + spriteVelocityX);
+            startX = endX = (int)(currentPlayer.getX() + currentPlayer.getVelocity().x);
         }
-        startY = (int)(player.getY());
-        endY = (int)(player.getY() + height);
+
+        startY = (int)(currentPlayer.getY());
+        endY = (int)(currentPlayer.getY() + currentPlayer.getHeight());
         getTiles(startX, startY, endX, endY, tiles);
-        spriteBox.x += spriteVelocityX;
+        spriteBox.x += currentPlayer.getVelocity().x;
+
         // Check collision with wall tile
         for (Rectangle tile : tiles) {
             if (spriteBox.overlaps(tile)) {
-                spriteVelocityX = 0;
+                currentPlayer.getVelocity().x = 0;
                 break;
             }
         }
-        spriteBox.x = player.getX();
+        spriteBox.x = currentPlayer.getX();
 
         //
         // y-axis collision detection
@@ -113,35 +135,37 @@ public class PlayerController {
         // top bounding box edge
         // moving down: check the tiles to the bottom
 
-        if (spriteVelocityY > 0) {
-            startY = endY = (int) (player.getY() + height + spriteVelocityY);
+        if (currentPlayer.getVelocity().y > 0) {
+            startY = endY = (int) (currentPlayer.getY() + currentPlayer.getHeight() + currentPlayer.getVelocity().y);
         } else {
-            startY = endY = (int)(player.getY() + spriteVelocityY);
+            startY = endY = (int)(currentPlayer.getY() + currentPlayer.getVelocity().y);
         }
-        startX = (int)(player.getX());
-        endX = (int)(player.getX() + width);
+
+        startX = (int)(currentPlayer.getY());
+        endX = (int)(currentPlayer.getY() + currentPlayer.getWidth());
         getTiles(startX, startY, endX, endY, tiles);
-        spriteBox.y += spriteVelocityY;
+        spriteBox.y += currentPlayer.getVelocity().y;
+
         // Check collision with wall tile
         for (Rectangle tile : tiles) {
             if (spriteBox.overlaps(tile)) {
-                spriteVelocityY = 0;
+                currentPlayer.getVelocity().y = 0;
                 break;
             }
         }
-
 
         rectPool.free(spriteBox);
 
         // unscale the velocity by the inverse delta time and set
         // the latest position
-        player.translate(spriteVelocityX, spriteVelocityY);
+        currentPlayer.translate();
+        otherPlayer.translate();
         //velocity.scl(1 / deltaTime);
 
         // Apply damping to the velocity on the x-axis and y-axis so we don't
-        // walk infinitely once a key was pressed
-        spriteVelocityX *= 0.67f;
-        spriteVelocityY *= 0.67f;
+        // walk infinitely once a key was presseded
+        currentPlayer.getVelocity().x *= 0.67f;
+        currentPlayer.getVelocity().y *= 0.67f;
     }
     private void getTiles (int startX, int startY, int endX, int endY, Array<Rectangle> tiles) {
         TiledMapTileLayer layer = (TiledMapTileLayer)map.getLayers().get("Walls");
@@ -160,6 +184,4 @@ public class PlayerController {
             }
         }
     }
-
-
 }

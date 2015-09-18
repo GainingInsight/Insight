@@ -1,11 +1,14 @@
 package com.insight.networking;
 
 import com.badlogic.gdx.Gdx;
+import com.insight.game.objects.Avatar;
 import io.socket.client.*;
 import io.socket.emitter.Emitter;
 import org.json.*;
 
 import java.net.URISyntaxException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.concurrent.Callable;
 
 public class SessionManager {
@@ -20,12 +23,22 @@ public class SessionManager {
   public String sessionKey;
   public String clientRole;
 
-  private SessionManager() {}
+  private HashMap<String, Avatar> playerGroup;
+
+  private SessionManager() {
+    playerGroup = new HashMap();
+    playerGroup.put("currentPlayer", new Avatar());
+    playerGroup.put("otherPlayer", new Avatar());
+  }
 
   public static SessionManager instance() {
     if(instance == null)
       instance = new SessionManager();
     return instance;
+  }
+
+  public HashMap<String, Avatar> getPlayers() {
+    return playerGroup;
   }
 
   public void startSocketServer(NetworkingToken token) {
