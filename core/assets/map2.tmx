@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="50" height="38" tilewidth="16" tileheight="16" nextobjectid="1">
+ <tileset firstgid="1" name="Dawn" tilewidth="16" tileheight="16" tilecount="14758">
+  <image source="dawntileset.png" width="1504" height="2519"/>
+  <terraintypes>
+   <terrain name="steps" tile="-1"/>
+  </terraintypes>
+  <tile id="3507" terrain=",0,0,0"/>
+  <tile id="3601" terrain="0,0,0,0"/>
+  <tile id="3695" terrain="0,0,0,"/>
+ </tileset>
+ <layer name="Tile Layer 1" width="50" height="38">
+  <data encoding="base64" compression="zlib">
+   eJzt1zEKwjAUBuAfweoWZ1c3b6CLehIFB8FjuIhH6KBnUTpKD6HiPXwhKSkOUmggPv2Hj2zl/3l9gVx7wLivW/kDHT7ZmfQZ2INi6CLOd0bGSd2H6N/F2mkiIiIiIiIiLW7yGL6Lhxia4KLsjTzLgLlYZKHDGu5Mna1NjyXcLDT3sHPYIMwldbambOaqx1P2I+84kwEw9VJnbGJb61GnrYd1lNynN9V/lSvqYXeiECu/F4U/z/7e3X9BxrYO4gW3tYGP
+  </data>
+ </layer>
+ <layer name="Walls" width="50" height="38">
+  <data encoding="base64" compression="zlib">
+   eJzVmMtNxDAQhn3YLHtiuSIqQFQQKANRC3CAPQIVQC9ABUAFCW3AFUebSGZ2xvPwA2JppE02Gecb+/eM/bbn3PvM7cPb8cq5533nXgJ79fZX7Wbh3Gahe+dkteU4XJf5JkvrPMNnAY4hPreIhTGDMaTekVgPODjfw38Ux1Fw3Y2+T5vfdtbQMWyb3eelBjk438N3SDm4cbbMBakvie+J4zL47iv/+3qmHBq/2NzvR7NqYhP57lIclF5y6aFFtIfFKGSHHFSstfHRNM6fZJ2BHJa1qQaHdl5ZNG3JFVAPMW3B+VCKQ6sXTA+a56Uc3LqTqpccz8McDzmw2PRIvEO9wPWlBge8J1l3JeMaNkwvGj1w+cTKYYlfOH6petBwYDUk9Q63PuXWj4YDqyFjfrn1CcvHNThS/XLvc3XFMMZPzda+mv/JQekBrnnT/RQOjT4wvcT2htpWSx9YPZqzjuT6i3Fo/HL/S/WgyRdYn8P8g/vzEhySNcxaT08ck5ak+w9NPZq6Dw5jTdnEQHFYzjlyc2i+geKwNMl6ZtlTaPquwUHV0Dk4zpfOXSzp/MGtNannG5qaTZKLqPyhmf85ONqgr1itzHFo+tReY/mdYsV8fQv2aDU4JHWFlaNb+zEbLfX8CuZvmG+w/BPeC8eKq3liTZI/Sp2tQ9878TZySFruc7iUvh4P/J5lNC2H9nwkpUn7GnR+5+1+5vbg7QeSKQ2p
+  </data>
+ </layer>
+ <layer name="Tile Layer 3" width="50" height="38">
+  <data encoding="base64" compression="zlib">
+   eJzt1rkNwkAYBeGVvU0ACVcVXG0BCVdpXB0ACVcpDCESkR0sxvNJE1hy8Db7Q5AkSZIkSSrumKVeIP2OQfz8nsTv/0l11aAmtVIPKWlKM5qnHlLSic50ST2kprbcUDva0yGr7k3VzkPoUJd61M9TLypmwe4lrWhNm4q+48ruG93pQc+KvuN9Uw1pROP4/zfVC2+qEkw=
+  </data>
+ </layer>
+</map>

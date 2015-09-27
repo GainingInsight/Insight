@@ -25,7 +25,8 @@ public class PlayerScreen extends ScreenAdapter {
     Skin skin;
     SpriteBatch spriteBatch;
     Texture texture;
-    Texture overlayNSTexture;
+    Texture overlayTexture;
+    Texture overlayFSTexture;
 
     SessionManager session;
     InsightGame game;
@@ -35,6 +36,7 @@ public class PlayerScreen extends ScreenAdapter {
     private WorldRenderer renderer;
     private OrthographicCamera camera;
     private Sprite overlayNS;
+    private Avatar playerOverlay;
     private Sprite overlayFS;
     private PlayerController controller;
 
@@ -45,30 +47,37 @@ public class PlayerScreen extends ScreenAdapter {
         this.game = game;
 
         session = SessionManager.instance();
+        playerOverlay = session.getPlayers().get("playerOverlay");
 
       if(session.clientRole == "playerNS") {
         currentPlayer = session.getPlayers().get("playerNS");
         otherPlayer = session.getPlayers().get("playerFS");
+          overlayTexture = new Texture("NSOverlay.png");
+
+
       } else {
         currentPlayer = session.getPlayers().get("playerFS");
         otherPlayer = session.getPlayers().get("playerNS");
+          overlayTexture = new Texture("FSOverlay.png");
       }
 
         // load map texture TMX file
-        map = new TmxMapLoader().load("map.tmx");
+        map = new TmxMapLoader().load("map2.tmx");
 
         //spriteBatch = new SpriteBatch();
         texture = new Texture("testSprite.png");
-        overlayNSTexture = new Texture("NSoverlay.png");
-        overlayNS = new Sprite (overlayNSTexture);
+        //overlayNS = new Texture("NSoverlay.png");
+        //overlayNS = new Sprite (overlayNSTexture);
 
         currentPlayer.setPlayerSprite(new Sprite(texture));
         otherPlayer.setPlayerSprite(new Sprite(texture));
+        playerOverlay.setPlayerSprite(new Sprite(overlayTexture));
 
         System.out.println("BBB: " + currentPlayer + ", " + otherPlayer);
 
         currentPlayer.setPosition(Avatar.START_POSITION.x, Avatar.START_POSITION.y);
         otherPlayer.setPosition(Avatar.START_POSITION.x, Avatar.START_POSITION.y);
+        playerOverlay.setCenter(currentPlayer.getX(), currentPlayer.getY());
 
         stage = new Stage(new ScreenViewport());
         skin = new Skin(Gdx.files.internal("uiskin.json"));
@@ -79,6 +88,7 @@ public class PlayerScreen extends ScreenAdapter {
         controller = new PlayerController(stage);
         renderer.addSprite(currentPlayer.getPlayerSprite());
         renderer.addSprite(otherPlayer.getPlayerSprite());
+        renderer.addSprite(playerOverlay.getPlayerSprite());
 
         session.listenForMovement();
     }
@@ -110,7 +120,7 @@ public class PlayerScreen extends ScreenAdapter {
       stage.getRoot().addAction(Actions.fadeIn(0.5f));
 
       camera = new OrthographicCamera();
-      camera.setToOrtho(false, 800, 600);
+      camera.setToOrtho(false, 800, 608);
       camera.update();
 
       Gdx.input.setInputProcessor(stage);
@@ -126,7 +136,7 @@ public class PlayerScreen extends ScreenAdapter {
         float deltaTime = Gdx.graphics.getDeltaTime();
         controller.update(map, deltaTime);
         // visual scope for near-sighted player
-        overlayNS.setCenter(currentPlayer.getX(), currentPlayer.getY());
+        //overlayNS.setCenter(currentPlayer.getX(), currentPlayer.getY());
 
         // render map
         camera.update();

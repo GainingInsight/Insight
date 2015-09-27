@@ -29,6 +29,7 @@ public class SessionManager {
     playerGroup = new HashMap();
     playerGroup.put("playerNS", new Avatar());
     playerGroup.put("playerFS", new Avatar());
+    playerGroup.put("playerOverlay", new Avatar());
   }
 
   public static SessionManager instance() {

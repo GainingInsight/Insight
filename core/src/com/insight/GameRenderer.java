@@ -22,11 +22,12 @@ public class GameRenderer {
         this.player = player;
 
         // top-down renderer for map with 1 unit = 10 pixels
-        mapRenderer = new OrthogonalTiledMapRenderer(map, 1 / 10f);
+        mapRenderer = new OrthogonalTiledMapRenderer(map, 1 / 16f);
         camera = new OrthographicCamera();
 
         // camera view = 80 x 60 units = 800x600 res
-        camera.setToOrtho(false, 80, 60);
+        //TEST
+        camera.setToOrtho(false, 50, 38);
         camera.update();
         mapRenderer.setView(camera);
     }

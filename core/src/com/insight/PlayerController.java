@@ -148,9 +148,9 @@ public class PlayerController {
             otherPlayer.setMoving(true);
         }
 
-        // Face players left or right
-        currentPlayer.getPlayerSprite().setFlip(currentPlayer.getDirection(), false);
-        otherPlayer.getPlayerSprite().setFlip(otherPlayer.getDirection(), false);
+        // Face players left or right when moving
+        if(currentPlayer.getMoving()) currentPlayer.getPlayerSprite().setFlip(currentPlayer.getDirection(), false);
+        if(otherPlayer.getMoving())  otherPlayer.getPlayerSprite().setFlip(otherPlayer.getDirection(), false);
 
         // current player standing still
         if (Math.abs(currentPlayer.getVelocity().x) < 1) {
@@ -299,11 +299,11 @@ public class PlayerController {
         tiles.clear();
         for (int y = startY; y <= endY; y++) {
             for (int x = startX; x <= endX; x++) {
-                Cell cell = layer.getCell((int)x/10, (int)y/10);
+                Cell cell = layer.getCell((int)x/16, (int)y/16);
 
                 if (cell != null) {
                     Rectangle rect = rectPool.obtain();
-                    rect.set(x, y, 10, 10);
+                    rect.set(x, y, 16, 16);
                     tiles.add(rect);
                 }
             }

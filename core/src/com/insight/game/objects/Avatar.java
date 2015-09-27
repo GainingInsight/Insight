@@ -55,6 +55,10 @@ public class Avatar {
       playerSprite.setPosition(xPos, yPos);
     }
 
+    public void setCenter(float xPos, float yPos){
+        playerSprite.setCenter(xPos, yPos);
+    }
+
     public void setStateTime(float time){
         stateTime = time;
     }
